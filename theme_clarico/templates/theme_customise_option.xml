@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="header_custom_options" inherit_id="website.snippet_options">
+        <xpath expr="//we-select[@data-variable='header-template']/we-button[last()]" position="after">
+            <we-button title="Header Style 1"
+                       data-name="header_style_1_opt"
+                       data-customize-website-views="theme_clarico.option_header_01_assets,theme_clarico.customize_header_style_1"
+                       data-customize-website-variable="'header_style_1'"
+                       data-img="/theme_clarico/static/src/img/customise_option/h_style-1.jpg"/>
+
+            <we-button title="Header Style 2"
+                       data-name="header_style_2_opt"
+                       data-customize-website-views="theme_clarico.option_header_02_assets,theme_clarico.customize_header_style_2"
+                       data-customize-website-variable="'header_style_2'"
+                       data-img="/theme_clarico/static/src/img/customise_option/h_style-2.jpg"/>
+
+            <we-button title="Header Style 3"
+                       data-name="header_style_3_opt"
+                       data-customize-website-views="theme_clarico.option_header_03_assets,theme_clarico.customize_header_style_3"
+                       data-customize-website-variable="'header_style_3'"
+                       data-img="/theme_clarico/static/src/img/customise_option/h_style-3.jpg"/>
+
+            <we-button title="Header Style 4"
+                       data-name="header_style_4_opt"
+                       data-customize-website-views="theme_clarico.option_header_04_assets,theme_clarico.customize_header_style_4"
+                       data-customize-website-variable="'header_style_4'"
+                       data-img="/theme_clarico/static/src/img/customise_option/h_style-4.jpg"/>
+
+            <we-button title="Header Style 5"
+                       data-name="header_style_5_opt"
+                       data-customize-website-views="theme_clarico.option_header_05_assets,theme_clarico.customize_header_style_5"
+                       data-customize-website-variable="'header_style_5'"
+                       data-img="/theme_clarico/static/src/img/customise_option/h_style-5.jpg"/>
+        </xpath>
+        <xpath expr="//we-select[@data-variable='header-template']" position="after">
+            <div data-selector="section, section .row > div, .s_col_no_bgcolor, .s_col_no_bgcolor.row > div, .o_gallery .row > div">
+                <we-select string="Animations" class="fa fa-magic" data-no-preview="true">
+                    <we-button data-select-class="none">Remove Animation</we-button>
+
+                    <div class="text-muted text-white py-3 px-4">Fade</div>
+
+                    <we-button data-select-class="fade-up">Up</we-button>
+                    <we-button data-select-class="fade-down">Down</we-button>
+                    <we-button data-select-class="fade-right">Right</we-button>
+                    <we-button data-select-class="fade-left">Left</we-button>
+                    <we-button data-select-class="fade-up-right">up-right</we-button>
+                    <we-button data-select-class="fade-up-left">Up-left</we-button>
+                    <we-button data-select-class="fade-down-right">down-right</we-button>
+                    <we-button data-select-class="fade-down-left">down-left</we-button>
+
+                    <div class="text-muted text-white py-3 px-4">Flip</div>
+
+                    <we-button data-select-class="flip-left">Left</we-button>
+                    <we-button data-select-class="flip-right">Right</we-button>
+                    <we-button data-select-class="flip-up">Up</we-button>
+                    <we-button data-select-class="flip-down">Down</we-button>
+
+                    <div class="text-muted text-white py-3 px-4">Zoom</div>
+
+                    <we-button data-select-class="zoom-in">In</we-button>
+                    <we-button data-select-class="zoom-in-up">in-up</we-button>
+                    <we-button data-select-class="zoom-in-down">in-down</we-button>
+                    <we-button data-select-class="zoom-in-left">in-left</we-button>
+                    <we-button data-select-class="zoom-in-right">in-right</we-button>
+                    <we-button data-select-class="zoom-out">Out</we-button>
+                    <we-button data-select-class="zoom-out-up">out-up</we-button>
+                    <we-button data-select-class="zoom-out-down">out-down</we-button>
+                    <we-button data-select-class="zoom-out-right">out-right</we-button>
+                    <we-button data-select-class="zoom-out-left">out-left</we-button>
+                </we-select>
+            </div>
+        </xpath>
+    </template>
+    <template id="footer_custom_options" inherit_id="website.snippet_options">
+        <xpath expr="//we-select[@data-variable='footer-template']/we-button[last()]" position="after">
+            <we-button title="Footer Style 1"
+                       data-customize-website-views="theme_clarico.option_footer_01_assets,theme_clarico.customize_footer_style_1"
+                       data-customize-website-variable="'option_footer_01'"
+                       data-img="/theme_clarico/static/src/img/customise_option/footer_1.jpg"/>
+            <we-button title="Footer Style 2"
+                       data-customize-website-views="theme_clarico.option_footer_02_assets,theme_clarico.customize_footer_style_2"
+                       data-customize-website-variable="'option_footer_02'"
+                       data-img="/theme_clarico/static/src/img/customise_option/footer_2.jpg"/>
+            <we-button title="Footer Style 3"
+                       data-customize-website-views="theme_clarico.option_footer_03_assets,theme_clarico.customize_footer_style_3"
+                       data-customize-website-variable="'option_footer_03'"
+                       data-img="/theme_clarico/static/src/img/customise_option/footer_3.jpg"/>
+        </xpath>
+    </template>
+
+</odoo>

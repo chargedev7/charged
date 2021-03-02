@@ -1,0 +1,34 @@
+Version 14.0.2.0.1 - 12 Feb 21
+===================================
+Note:First upgrade emipro_theme_base and update theme.
+
+Improvement
+
+ - Improve UI/UX.
+
+Version 14.0.2.0.0 - 18 Dec 20
+===================================
+Note:First upgrade emipro_theme_base and update theme.
+
+Improvement
+
+ - Improve scroll for counting number snippet.
+ - CSS improvement in snippets and header.
+
+ Feature
+
+- Introduced Product Display Builder Snippet.
+
+Version 14.0.1.0.1 - 24 Nov 20
+===================================
+Note:First upgrade emipro_theme_base and update theme.
+
+Improvement
+
+ - Changed XPath for ajax cart hidden input for the product page.
+ - Removed pointer event from aos.css file.
+
+Version 14.0.1.0.0 - 11 Nov 20
+===================================
+
+1. Initial release
