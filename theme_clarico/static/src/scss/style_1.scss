@@ -25,19 +25,23 @@
 			-----------------------------------
 			1. Product page common style
 
+			  Off-canvas hamburger menu
+			-----------------------------------
+            1. Off-canvas menu
+
 */
 /*================== 1. Cart page ===================*/
 /*------- Font size of navigation menu ---------*/
-.te_header_navbar
-{
-    & #top_menu
-    {
-        >li > a.nav-link
-        {
-            font-size: $font-size-base !important;
-        }
-    }
-}
+// .te_header_navbar
+// {
+//     & #top_menu
+//     {
+//         >li > a.nav-link
+//         {
+//             font-size: $font-size-base;
+//         }
+//     }
+// }
 .te_cart_prod_attr_lines{
 
     label {
@@ -219,12 +223,14 @@ td.text-center.text-xl-right.border-0
 			    border:0px;
 			}
 			.btn {
-			    padding: 0.5rem 1rem;
+			    padding: 0px 12px;
 			}
 		}
 		input.js_quantity
 		{
 			max-width: 50px;
+			height: auto;
+            line-height: 36px;
 		}
 	}
 }
@@ -646,7 +652,7 @@ td.text-center.text-xl-right.border-0
 			margin-top: 10px;
 			.js_add_cart_json
 			{
-				padding: 0.375rem 0.7rem;
+				/*padding: 0.375rem 0.7rem;*/
 				border: 1px solid #ced4da; /*This color is not used in variables*/
 			}
 			.js_quantity
@@ -655,8 +661,8 @@ td.text-center.text-xl-right.border-0
 				height: auto;
 				width: 38px;
 				border-color: nth($f_color,11);
-				border-right: 0;
-				border-left: 0;
+				/*border-right: 0;
+				border-left: 0;*/
 			}
 		}
 		.product_price
@@ -763,7 +769,7 @@ td.text-center.text-xl-right.border-0
 }
 /*======================== 6. Checkout Form and Address =====================*/
 /*------------------- Checkout Form-------------------*/
-.form-group > .form-control
+.form-group .form-control
 {
 	&:focus
 	{
@@ -1457,11 +1463,6 @@ div#date_publish_container_new{
        z-index:9;
     }
 }
-.o_portal_wrap{
-    .o_portal_my_doc_table tr {
-        cursor: pointer;
-    }
-}
 [data-view-key='website_sale.search_count_box']:nth-of-type(2n) {
     display: none;
 }
@@ -1469,6 +1470,23 @@ div#date_publish_container_new{
     @include media-breakpoint-up(md)
     {
         position:relative;
+    }
+}
+#top_menu_collapse #top_menu > li > a.nav-link{
+    position:relative;
+    span#menu_label_tx_span {
+        @include position(absolute,null,0,100%,0);
+         display: block;
+         width: auto;
+         max-width: 70px;
+         margin: 0 auto;
+         text-align: center;
+        @include media-breakpoint-down(sm){
+            @include position(absolute,auto,auto,auto,auto);
+            margin-left: 15px;
+            display: inline-block;
+            width: 100px;
+        }
     }
 }
 // #top_menu > li > ul.dropdown-menu > li > a.active.dropdown-item{
@@ -1545,7 +1563,7 @@ o_wblog_post_search
     }
     .ajax-sucess-bottom {
         .te_theme_button {
-            padding: 0.7rem 1.5rem;
+            padding: 0.7rem 1.0rem !important;
         }
     }
 }
@@ -1594,10 +1612,20 @@ header .js_language_selector .list-inline a.js_change_lang.list-inline-item:not(
 }
 /* Header all dropdown fix font size */
 header .dropdown-menu a.dropdown-item{
-    font-size:nth($f_sizes,3) !important;
+       font-size: $font-size-dynamic - 0.125rem !important; /* Reduced 2px */
+       @include media-breakpoint-down(sm){
+        font-size: $font-size-dynamic - 0.25rem !important; /* Reduced 4px */
+       }
+
 }
 header .collapse.navbar-collapse .dropdown-menu a.dropdown-item{
     font-size: inherit !important;
+}
+header .dropdown-menu p.pl-2{
+       font-size: $font-size-dynamic - 0.063rem; /* Reduced 1px */
+       @include media-breakpoint-down(sm){
+        font-size: $font-size-dynamic - 0.19rem; /* Reduced 3px */
+       }
 }
 /* Odoo default Footer */
 #connect .list-unstyled li {
@@ -1731,6 +1759,7 @@ header .collapse.navbar-collapse .dropdown-menu a.dropdown-item{
     }
     input.search-query.form-control.oe_search_box
     {
+
         &:focus
         {
             box-shadow:none;
@@ -1740,6 +1769,14 @@ header .collapse.navbar-collapse .dropdown-menu a.dropdown-item{
             color: #b1b1b1; /*This color is not used in variables*/
         }
     }
+    .te_advanced_search_div{
+        .ept-parent-category{
+            border: 1px solid #a5806d;
+        }
+    }
+}
+#wrapwrap .te_searchform__popup .o_wsale_products_searchbar_form .dropdown-menu.w-100 {
+    height:54vh;
 }
 /*Google Map Style*/
 .google_map_div{
@@ -1824,6 +1861,7 @@ header .collapse.navbar-collapse .dropdown-menu a.dropdown-item{
         }
     }
 }
+
 /* Added min height in main body area */
 #wrapwrap > main {
     min-height: 750px;
@@ -1837,4 +1875,54 @@ html[data-view-xmlid="website_sale.checkout"]{
             min-height: 900px;
         }
     }
+}
+
+/* Font size Decrease */
+.te_p_sm{
+    font-size: $font-size-base - 0.125rem; /* Reduced 2px */
+}
+.te_p_disc{
+    font-size: $font-size-base - 0.188rem; /* Reduced 3px */
+}
+
+.tab-pane{
+    .oe_structure{
+        .s_text_image{
+            padding-top: 0px !important;
+        }
+    }
+}
+@include media-breakpoint-down(sm){
+    .o_portal_chatter{
+        .o_portal_chatter_avatar{
+            margin-left: 10px;
+        }
+        .media-body{
+           margin-right: 11px;
+        }
+    }
+}
+/*================== Off-canvas hamburger menu ===================*/
+/*------- 1. Off-canvas menu  ---------*/
+@if $-off-canvas-hamburger {
+    #top_menu_collapse {
+        &.collapsing, &.show {
+             #top_menu {
+                @if $-hamburger-center {
+                    width: 100%;
+                    max-width: none;
+                } @else {
+                    max-width: 100%;
+                    text-align: left !important;
+                }
+             }
+        }
+    }
+}
+
+/* Dynamic tab icons */
+.te_tab_mb_nav_link p {
+    display: inline-block;
+    font-size: nth($f_sizes, 7);
+    line-height: normal;
 }

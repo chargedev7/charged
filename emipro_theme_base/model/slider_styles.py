@@ -22,5 +22,6 @@ class SliderStyles(models.Model):
         ('slider', 'Slider'),
         ('grid', 'grid'),
         ('list', 'List'),
+        ('custom', 'Custom'),
     ], string="Slider Style",
         required=True, default='slider', readonly=False)

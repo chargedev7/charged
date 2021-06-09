@@ -47,6 +47,7 @@ odoo.define('theme_clarico.ajax_cart', function (require) {
             var product_id = frm.find('#add_to_cart').attr('product-id');
             var product_product = frm.find('input[name="product_id"]').val();
             var product_custom_attribute_values = frm.find('input[name="product_custom_attribute_values"]').val();
+            var no_variant_attribute_values = frm.find('input[name="no_variant_attribute_values"]').val();
             if(!product_id) {
                product_id = frm.find('.a-submit').attr('product-id');
             }
@@ -69,7 +70,7 @@ odoo.define('theme_clarico.ajax_cart', function (require) {
                 if(!quantity) {
                    quantity = 1;
                 }
-                ajax.jsonRpc('/shop/cart/update_custom', 'call',{'product_id':product_product,'add_qty':quantity, 'product_custom_attribute_values':product_custom_attribute_values}).then(function(data) {
+                ajax.jsonRpc('/shop/cart/update_custom', 'call',{'product_id':product_product,'add_qty':quantity, 'product_custom_attribute_values':product_custom_attribute_values,'no_variant_attribute_values':no_variant_attribute_values}).then(function(data) {
                     var ajaxCart = new publicWidget.registry.ajax_cart();
                     if(data) {
                         $('.ajax_cart_modal > .cart_close').trigger('click');

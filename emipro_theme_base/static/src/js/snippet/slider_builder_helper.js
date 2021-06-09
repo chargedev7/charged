@@ -4,6 +4,7 @@ var WysiwygMultizone = require('web_editor.wysiwyg.multizone');
 var rpc = require('web.rpc');
 
      WysiwygMultizone.include({
+
             start: function () {
                 $(document).on('change', '#snippets_list_allproduct .form-control, #snippets_list_product .form-control,#snippets_list_category .form-control,#snippets_list_best_seller .form-control,#snippets_list_new_product .form-control,#snippets_list_category_products .form-control',function(){
                     $(this).parents("form").find(".te_style_image_block").attr("class","te_style_image_block style-"+this.value);

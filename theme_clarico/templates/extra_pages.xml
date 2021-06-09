@@ -107,7 +107,7 @@
         </xpath>
     </template>
     <!--================= Home Page 1 ==============================-->
-    <template id="home_page_1" name="Style 1">
+    <template id="home_page_1" name="Home page 1">
         <section>
             <div id="wrap" class="oe_structure oe_empty">
                 <div id="myCarousel"
@@ -410,7 +410,7 @@
         </section>
     </template>
     <!--================= Home Page 2 ==============================-->
-    <template id="home_page_2" name="Style 2">
+    <template id="home_page_2" name="Home page 2">
         <section>
             <div id="wrap" class="oe_structure oe_empty">
                 <section class="s_banner parallax s_parallax_is_fixed oe_img_bg pt96 pb96 bg-white-75"
@@ -724,7 +724,7 @@
         </section>
     </template>
     <!--================= Home Page 3 ==============================-->
-    <template id="home_page_3" name="Style 3">
+    <template id="home_page_3" name="Home page 3">
         <section>
             <div id="wrap" class="oe_structure oe_empty">
                 <div id="myCarousel" class="s_carousel s_carousel_default carousel slide"
@@ -1105,7 +1105,7 @@
         </section>
     </template>
     <!--================= Home Page 4 ==============================-->
-    <template id="home_page_4" name="Style 4">
+    <template id="home_page_4" name="Style 1">
         <section>
             <div id="wrap" class="oe_structure oe_empty">
                 <div id="myCarousel1594728798945" class="s_carousel carousel s_carousel_default" data-interval="10000"
@@ -1499,7 +1499,7 @@
         </section>
     </template>
     <!--================= Home Page 5 ==============================-->
-    <template id="home_page_5" name="Style 5">
+    <template id="home_page_5" name="Style 2">
         <section>
             <div id="wrap" class="oe_structure">
                 <div class="oe_structure oe_empty" data-name="Style 2">

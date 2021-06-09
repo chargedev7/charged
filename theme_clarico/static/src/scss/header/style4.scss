@@ -23,9 +23,9 @@
 		        @include media-breakpoint-up(md){
                     line-height: $o-theme-navbar-logo-height;
                 }
-                > .te_custom_submenu > li.nav-item {
-                    line-height: normal;
-                }
+//                 > .te_custom_submenu > li.nav-item {
+//                     line-height: normal;
+//                 }
             }
             @include media-breakpoint-up(md)
             {
@@ -48,13 +48,13 @@
 	}
 	@include media-breakpoint-down(sm)
 	{
-		#top_menu
-		{
-			.nav-link
-			{
-				padding: 0.5rem !important;
-			}
-		}
+// 		#top_menu
+// 		{
+// 			.nav-link
+// 			{
+// 				padding: 0.5rem !important;
+// 			}
+// 		}
 		.navbar-toggler
 	    {
             font-size: 1.09375rem;
@@ -112,7 +112,8 @@
 		 {
 		    width: auto;
 		    float: right;
-		    padding: 0;
+		    padding-top: 4px;
+// 		    padding: 0;
 		    @include position(initial)
 
 		 	> div, > li
@@ -125,7 +126,7 @@
 		 		a
 		 		{
 		 			padding: 0 4px;
-		 			font-size: nth($f_sizes,2);
+		 			font-size: inherit;
 
 		 			sup
 		 			{
@@ -146,7 +147,7 @@
 		 	{
 		 		> a
 		 		{
-		 			font-size: nth($f_sizes,2) !important;
+		 			font-size: inherit !important;
 		 			padding: 0 4px !important;
 		 		}
 		 	}
@@ -170,7 +171,7 @@
         vertical-align: middle;
 		a,.btn-link
 		{
-			font-size:nth($f_sizes,3);
+			font-size: inherit;
 			margin-left: 0;
 		}
 		.dropdown-toggle
@@ -201,7 +202,7 @@
 		.h5_pricelist .dropdown-menu
 		{
 			left:0px !important;
-			right:0;
+			right:auto;
 			&:before{
                 left:8px;
             }
@@ -289,7 +290,7 @@
 			a
 			{
 				padding: 0 12px;
-				font-size:nth($f_sizes,7);
+				font-size:inherit;
 			}
 		}
 		.te_search_4_form
@@ -341,7 +342,7 @@
                     @include border-radius(0);
                     border: 0;
                     border-bottom: 1px solid $border-color;
-
+                    height:unset;
                     &:focus{
                         box-shadow:none;
                     }
@@ -376,7 +377,7 @@
 						display: inline-block;
 						background: none;
 						border: none;
-						font-size:nth($f_sizes,7);
+						font-size:inherit;
 						color:unset;
 						@include media-breakpoint-down(sm){
                             padding: 6px 15px;
@@ -385,8 +386,11 @@
                     .form-control::placeholder{
                         opacity:0.5;
                     }
-
                 }
+                .dropdown-menu button.dropdown-item.text-primary:active
+	                {
+	                    background-color: transparent;
+                    }
 				.te_4_text
 				{
 					text-align: left;
@@ -407,7 +411,7 @@
 			>a
 			{
 				padding: 0 12px;
-				font-size:nth($f_sizes,7);
+				font-size:inherit;
 				.te_user_account_icon
 				{
 					display: inline-block;
@@ -445,7 +449,7 @@
 	{
 		a
 		{
-			font-size: nth($f_sizes,7);
+			font-size: inherit;
 			padding: 0px 12px 0px 10px;
 		}
 		@include media-breakpoint-down(sm){
@@ -476,7 +480,7 @@
             }
             .dropdown-toggle {
 //                 background: nth($f_color,27) !important;
-                font-size: nth($f_sizes,3);
+                font-size: inherit;
                 padding: 0 4px;
                 box-shadow: none !important;
             }
@@ -489,17 +493,17 @@
 /*menu sale label style*/
 #top_menu_collapse #top_menu > li > a.nav-link span#menu_label_tx_span {
     margin-top: 2px;
-    @include media-breakpoint-down(sm){
-        margin-top: -3px;
-    }
+//     @include media-breakpoint-down(sm){
+//         margin-top: -3px;
+//     }
 }
 /* if off-canvas is enabled */
 @if $-off-canvas-hamburger {
     @include media-breakpoint-down(sm){
-        .o_connected_user:not(.editor_has_snippets) header:not(.o_header_affixed) #top_menu_collapse.show {
-            top: -45px;
-            padding-top: 0;
-        }
+//         .o_connected_user:not(.editor_has_snippets) header:not(.o_header_affixed) #top_menu_collapse.show {
+//             top: -45px;
+//             padding-top: 0;
+//         }
         li.o_offcanvas_logo_container {
             margin: 3rem auto;
         }
@@ -509,7 +513,17 @@
         }
     }
 }
-
+#top_menu_collapse.show .o_offcanvas_menu_backdrop{
+	    opacity: 0 !important;
+}
+#top_menu_collapse.show #top_menu .dropdown-menu{
+	    h1, .h1 { @include font-size($h1-font-size); }
+	    h2, .h2 { @include font-size($h2-font-size); }
+	    h3, .h3 { @include font-size($h3-font-size); }
+	    h4, .h4 { @include font-size($h4-font-size); }
+	    h5, .h5 { @include font-size($h5-font-size); }
+	    h6, .h6 { @include font-size($h6-font-size); }
+}
 /* apply extra color*/
 .te_header_before_left .dropdown-menu.show a.dropdown-item{
     opacity:0.5;
@@ -547,6 +561,7 @@ body .o_rtl .js_language_selector{
     .dropdown-menu.show {
         @include media-breakpoint-down(sm){
             right: auto;
+            left: -10px;
         }
     }
 }

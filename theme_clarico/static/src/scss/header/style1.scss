@@ -37,7 +37,7 @@
                 font-family: FontAwesome;
                 border: 0;
                 width: unset;
-                font-size:nth($f_sizes,18);
+                font-size:inherit;
                 vertical-align: initial;
                 font-weight: initial;
             }
@@ -63,12 +63,15 @@
         & #top_menu{
             flex-grow: unset !important;
             >li > a.nav-link {
-                font-size: 0.875rem;
+                font-size: inherit;
                 font-weight: 600;
                 @include position(relative)
                 padding-top:1rem;
                 @include media-breakpoint-down(sm){
-                   font-size: 0.875rem;
+                   font-size: inherit;
+                   font-weight: normal;
+                   padding: 0.5rem 0rem;
+                   border-top: 0px;
                 }
             }
         }
@@ -101,7 +104,7 @@
     {
         .te_currency_name, .te_currency_symbol
         {
-            font-size: nth($f_sizes,3);
+            font-size: inherit;
             padding: 0 4px;
         }
     }
@@ -111,7 +114,7 @@
             font-size: nth($f_sizes,3);
         }
         .js_language_selector .dropdown-toggle {
-            font-size: nth($f_sizes,3);
+            font-size: inherit;
             padding: 0 4px;
             box-shadow: none !important;
         }
@@ -154,12 +157,16 @@
         }
         > div.te_header_search {
             padding: 0px 8px 0px 15px;
-            @include media-breakpoint-down(sm){
-                padding: 0 8px;
-            }
             @include media-breakpoint-down(md){
                 padding: 0 8px 0px 12px;
             }
+            @include media-breakpoint-down(sm){
+                padding: 0 8px;
+            }
+              @include media-breakpoint-down(xs){
+                padding: 0 8px 0px 6px;
+            }
+
         }
         > li.te_wish_icon_head {
             padding: 0px 8px 0px 15px;
@@ -171,14 +178,14 @@
                 padding: 0;
                 @include position(relative);
                 display: inline-block !important;
-                font-size: nth($f_sizes,7);
+                font-size: inherit;
                 sup
                 {
                     @include border-radius(12px);
                     width: auto;
                     padding: 3px 5px;
                     vertical-align: top;
-                    font-size: nth($f_sizes,9);
+//                     font-size: nth($f_sizes,9);
                     @include position(absolute, -9px, -10px);
                     display: inline-block !important;
                 }
@@ -192,7 +199,7 @@
         {
             a
             {
-                font-size:nth($f_sizes,7);
+                font-size:inherit;
             }
         }
     }
@@ -200,7 +207,7 @@
     {
         & > a
         {
-            font-size:nth($f_sizes,7);
+            font-size:inherit;
         }
     }
     .te_header_search
@@ -213,7 +220,13 @@
             {
                 outline: none;
                 cursor:pointer;
-                font-size:nth($f_sizes,7);
+                font-size: inherit;
+                width: 18px;
+                display: block;
+                @include media-breakpoint-down(sm){
+                    width: 14px;
+                    display: inline-block;
+                }
             }
         }
         .te_search_popover {
@@ -234,7 +247,7 @@
             .form-control {
                 border:0;
                 box-shadow: unset;
-                font-size:nth($f_sizes,3);
+                font-size:inherit;
                 width:auto;
                 height: initial;
                 border-right: 1px solid transparent;
@@ -276,6 +289,17 @@
                 display: inline-block;
             }
         }
+        @include media-breakpoint-down(lg)
+                {
+                    .te_currency_name, .te_user_account_name{
+                        display: none;
+                    }
+                    .te_currency_symbol, .te_user_account_icon, .te_user_account_icon > i{
+
+                        display: inline-block !important;
+
+                    }
+                }
         @include media-breakpoint-down(md)
         {
             > .col-lg-4{
@@ -283,7 +307,7 @@
             }
             & .te_header_pricelist, .te_header_lang{
                 a.dropdown-toggle{
-                    font-size:nth($f_sizes,3) !important;
+                    font-size:inherit;
                     padding:10px;
                 }
                 .px-2
@@ -291,14 +315,14 @@
                     padding: 0 !important;
                 }
             }
-            .te_currency_name, .te_user_account_name
-            {
-                display: none;
-            }
-            .te_currency_symbol, .te_user_account_icon, .te_user_account_icon > i
-            {
-                display: inline-block !important;
-            }
+//             .te_currency_name, .te_user_account_name
+//             {
+//                 display: none;
+//             }
+//             .te_currency_symbol, .te_user_account_icon, .te_user_account_icon > i
+//             {
+//                 display: inline-block !important;
+//             }
             .te_header_pricelist{
                 .dropdown-menu{
                     &:before{
@@ -357,6 +381,9 @@
                     padding: 3px;
                     box-shadow: none;
                     padding: 8px 15px;
+                     @media (max-width:359px){
+                        padding: 8px 2px;
+                    }
                 }
             }
             > .col-lg-4 {
@@ -384,7 +411,7 @@
         {
             //background-color:nth($f_color,5);
             @include box-shadow(0px 0px 4px nth($f_color,17));
-            padding-left: 5px;
+//             padding-left: 5px;
         }
         /* if off-canvas is enabled */
         @if $-off-canvas-hamburger {
@@ -447,7 +474,7 @@
                 font-family: FontAwesome;
                 border: 0;
                 width: unset;
-                font-size: 0.75rem;
+                font-size: inherit;
                 vertical-align: initial;
                 font-weight: initial;
                 margin-left: 0px;
@@ -462,7 +489,7 @@
             font-family: FontAwesome;
             border: 0;
             width: unset;
-            font-size: 0.75rem;
+            font-size: inherit;
             vertical-align: initial;
             font-weight: initial;
         }
@@ -472,6 +499,9 @@ header.o_header_is_scrolled .te_header_before_overlay {
     @include media-breakpoint-up(md){
         display: none;
     }
+}
+.navbar-nav #custom_menu a.nav-link.active {
+	    border-top: 0px;
 }
 /* sticky filter icon in mobile view */
 .oe_website_sale .te_shop_filter_resp.sticky-filter {
@@ -483,27 +513,27 @@ header.o_header_is_scrolled .te_header_before_overlay {
         width: 0;
     }
 }
-/* While RTL */
+// /* While RTL */
 .o_rtl .te_user_account .dropdown-menu::before,
 .o_rtl .te_user_account .dropdown-menu::after{
-    left: 12px;
+//     left: 12px;
     @include media-breakpoint-down(sm){
         left: 14px;
     }
 }
-.o_rtl .te_header_lang .dropdown-menu::before,
-.o_rtl .te_header_lang .dropdown-menu::after{
-    left: 20px;
-}
+// .o_rtl .te_header_lang .dropdown-menu::before,
+// .o_rtl .te_header_lang .dropdown-menu::after{
+//     left: 20px;
+// }
 .o_rtl .te_header_pricelist .dropdown-menu::before,
 .o_rtl .te_header_pricelist .dropdown-menu::after{
-    left: auto;
-    right: 20px;
+//     left: auto;
+//     right: 20px;
     @include media-breakpoint-down(sm){
         left: 50px;
         right: auto;
     }
-}
+ }
 .o_rtl .te_header_style_1_main .te_header_pricelist .dropdown-menu{
     @include media-breakpoint-down(sm){
         left: auto !important;

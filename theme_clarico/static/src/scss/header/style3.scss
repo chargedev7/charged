@@ -7,10 +7,13 @@
 	#top_menu_container
 	{
 	    min-height: 45px;
+	     @include media-breakpoint-down(sm){
+		        min-height: auto;
+		    }
 	}
      #top_menu
     {
-        margin:0px auto;
+        /*margin:0px auto;*/
         flex-grow: unset !important;
         >li
         {
@@ -60,14 +63,14 @@
 	    /* background-color: #F9F9F9 !important;*/  /* Not used mixin to add important*/
 	    padding: 0.3rem 0rem;
 	    clear:both;
-		#top_menu_collapse, #top_menu_collapse_clone
-		{
-			& #top_menu > li > a.nav-link
-			{
-				color : nth($f_color,3);
-				padding: 0.5rem !important;
-			}
-		}
+// 		#top_menu_collapse, #top_menu_collapse_clone
+// 		{
+// 			& #top_menu > li > a.nav-link
+// 			{
+// 				color : nth($f_color,3);
+// 				padding: 0.5rem !important;
+// 			}
+// 		}
 	}
 }
 /* if off-canvas is enabled */
@@ -123,7 +126,7 @@ header .navbar.navbar-light span.navbar-toggler-icon{
 
 		a,.btn-link, button
 		{
-			font-size:nth($f_sizes,3);
+			font-size:inherit;
 		}
 		.btn
 		{
@@ -149,15 +152,17 @@ header .navbar.navbar-light span.navbar-toggler-icon{
             right: auto;
 			@include media-breakpoint-down(sm)
 			{
-                right: -15px !important;
-				&:before{
-                    left:unset;
-                    right:12px;
-                }
-                &:after{
-                    left:unset;
-                    right:11px;
-                }
+//                 right: -15px !important;
+                left:auto !important;
+				transform: translate3d(-35px,22px,0px) !important;
+// 				&:before{
+//                     left:unset;
+//                     right:12px;
+//                 }
+//                 &:after{
+//                     left:unset;
+//                     right:11px;
+//                 }
 			}
 		}
 	}
@@ -183,14 +188,14 @@ header .navbar.navbar-light span.navbar-toggler-icon{
 			padding: 0 6px;
 			@include position(relative);
 			display: inline-block !important;
-			font-size:nth($f_sizes,7);
+			font-size:inherit;
 			sup
 			{
 				@include border-radius(12px);
 				width: auto;
 				padding: 4px 6px;
 				vertical-align: top;
-				font-size: nth($f_sizes,9);
+// 				font-size: nth($f_sizes,9);
 				@include position(absolute, -11px, -5px);
 				display: inline-block !important;
 			}
@@ -204,11 +209,11 @@ header .navbar.navbar-light span.navbar-toggler-icon{
 	{
 		a
 		{
-			font-size: nth($f_sizes,7);
-			@include media-breakpoint-down(sm)
-			{
-				font-size: nth($f_sizes,2);
-			}
+			font-size: inherit;
+// 			@include media-breakpoint-down(sm)
+// 			{
+// 				font-size: nth($f_sizes,2);
+// 			}
 		}
 	}
 }
@@ -224,13 +229,13 @@ header .navbar.navbar-light span.navbar-toggler-icon{
                 border-bottom: 0;
                 vertical-align: 0.350em;
             }
-            .dropdown-menu,
-            .dropdown-menu.show {
-                top: 5px !important;
-            }
+//             .dropdown-menu,
+//             .dropdown-menu.show {
+//                 top: 5px !important;
+//             }
             .dropdown-toggle {
                 //background: nth($f_color,27) !important;
-                font-size: nth($f_sizes,3);
+                font-size: inherit;
                 padding: 0 4px;
                 box-shadow: none !important;
             }
@@ -242,7 +247,8 @@ header .navbar.navbar-light span.navbar-toggler-icon{
                 .dropdown-menu,
                 .dropdown-menu.show {
                     top: 1px !important;
-                    right: -15px;
+//                     right: -15px;
+                    right: 0px;
                     left: auto !important;
                 }
             }
@@ -260,6 +266,7 @@ header .navbar.navbar-light span.navbar-toggler-icon{
 	{
 		@include position(absolute,auto,0,auto,auto);
 		z-index: 9;
+		font-size:inherit;
 	}
 	.input-group {
 		@include box-shadow(0 1px 5px 0 rgba(32, 33, 36, 0.2))
@@ -279,7 +286,7 @@ header .navbar.navbar-light span.navbar-toggler-icon{
             display:block;
             a
             {
-                font-size:nth($f_sizes,2);
+                font-size:inherit;
                 outline: none;
             }
             i
@@ -424,7 +431,7 @@ header .navbar.navbar-light span.navbar-toggler-icon{
 					& a.btn-link
 					{
 						padding: 0px 2px;
-						font-size:nth($f_sizes,2) !important;
+						font-size:inherit !important;
 						& .caret
 						{
 							margin-left: 0px !important;
@@ -434,7 +441,7 @@ header .navbar.navbar-light span.navbar-toggler-icon{
 					{
 						a, .te_user_account_icon
 						{
-							font-size: nth($f_sizes,2);
+							font-size: inherit;
 						}
 					}
 				}
@@ -462,7 +469,7 @@ header .navbar.navbar-light span.navbar-toggler-icon{
             box-shadow: none !important;
         }
         .form-control{
-            font-size:nth($f_sizes,3);
+            font-size:inherit;
             &:placeholder{
                 opacity:0.5;
             }
@@ -474,8 +481,26 @@ header .navbar.navbar-light span.navbar-toggler-icon{
             box-shadow:none;
             border:0px;
         }
+        .ept-parent-category {
+                        border: 0;
+                        @include border-radius(30px);
+                        z-index: 1;
+                        width: auto;
+                        background: nth($f_color,18);
+                        /*display: inline-block;
+                        flex: none;
+                        box-shadow: unset;
+                        padding: 0 0.25rem 0 0.5rem;*/
+                        border-top-right-radius: 0;
+                        border-bottom-right-radius: 0;
+                        font-size: inherit;
+                        max-width: 120px;
+                        color: unset;
+                        padding: 0.675rem 1rem;
+                        line-height: 170%;
+                    }
         button.oe_search_button > i{
-            font-size:nth($f_sizes,3);
+            font-size:inherit;
             vertical-align: top;
         }
         button.oe_search_button.btn-primary:not(:disabled):not(.disabled):active,
@@ -516,10 +541,10 @@ header .navbar.navbar-light span.navbar-toggler-icon{
 .o_rtl .te_login_right div.px-1.te_pricelist{
     .dropdown-menu::before,
     .dropdown-menu::after{
-        @include media-breakpoint-down(sm){
-            right: auto;
-            left: 12px;
-        }
+//         @include media-breakpoint-down(sm){
+//             right: auto;
+//             left: 12px;
+//         }
     }
 }
 .o_rtl .te_login_right > div .te_user_account {

@@ -6,27 +6,11 @@ odoo.define('theme_clarico.snippetEpt', function (require) {
 	var SnippetOption = require('web_editor.snippets.options');
 
     SnippetOption.Class.include({
-        selectClass: function (previewMode, widgetValue, params) {
-            for (const classNames of params.possibleValues) {
-                if (classNames) {
-                    this.$target[0].classList.remove(...classNames.trim().split(/\s+/g));
-                }
-            }
-            if (widgetValue) {
-                var data_aos_ept = this.$target.attr('data_aos_ept');
-                var data_aos = this.$target.attr('data-aos');
-
-                if(data_aos_ept){
-                    this.$target.addClass(widgetValue);
-                    this.$target.attr('data_aos_ept',widgetValue);
-                }
-                else if(data_aos){
-                    this.$target[0].classList.add(...widgetValue.trim().split(/\s+/g));
-                }
-                else{
-                    this.$target.addClass(widgetValue);
-                    this.$target.attr('data_aos_ept',widgetValue);
-                }
+        selectClass: async function (previewMode, widgetValue, params) {
+            await this._super(...arguments);
+            const aos = 'aosData' in params ? params.aosData : false;
+            if(aos) {
+                this.$target.attr('data_aos_ept',aos);
             }
         },
     });

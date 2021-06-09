@@ -11,3 +11,4 @@ from . import slider_styles
 from . import proudct_pricelist
 from . import res_config
 from . import product_tab_line
+from . import product_attribute_value

@@ -4,7 +4,7 @@
     'name': 'Theme Clarico',
     'category': 'Theme/eCommerce',
     'summary': 'Fully Responsive Odoo Theme suitable for eCommerce Businesses',
-    'version': '2.0.1',
+    'version': '2.2.4',
     'license': 'OPL-1',
     'depends': [
         # 'website_theme_install',
@@ -12,18 +12,20 @@
         'emipro_theme_product_label',
         'emipro_theme_brand',
         'emipro_theme_product_carousel',
-        'emipro_theme_category_carousel',
         'emipro_theme_quick_filter',
         'emipro_theme_category_listing',
         'emipro_theme_product_timer',
         'website_sale_stock',
         'pwa_ept',
+        'emipro_theme_load_more',
+        'emipro_theme_lazy_load',
+        'emipro_theme_product_tabs',
     ],
 
     'data': [
         # 'data/slider_styles_data.xml',
         'data/compare_data.xml',
-        'templates/slider.xml',
+        'templates/emipro_dynamic_snippets.xml',
         'templates/category.xml',
         'templates/compare.xml',
         'templates/assets.xml',
@@ -41,6 +43,7 @@
         'templates/portal.xml',
         'templates/wishlist.xml',
         'templates/cart.xml',
+        'templates/search.xml',
         'templates/contactus.xml',
         'templates/quick_view.xml',
         'templates/ajax_cart.xml',
@@ -49,8 +52,8 @@
         'templates/product_label.xml',
         'templates/menu_config.xml',
         'templates/404.xml',
-        'templates/extra_pages.xml'
-
+        'templates/extra_pages.xml',
+        'templates/emipro_dynamic_snippets_styles.xml',
     ],
 
     # Odoo Store Specific

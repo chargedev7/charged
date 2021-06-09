@@ -37,7 +37,20 @@ odoo.define('theme_clarico.vertical_menu', function(require) {
             });
             // Vertical menu position
             var $h_menu = $("#oe_main_menu_navbar").height();
-            $(".te_vertical_menu").css({top:$h_menu + 0, bottom: 0, right: 0, position:'fixed', 'z-index':9999});
+            $(".te_vertical_menu").css({top:$h_menu + 0, bottom: 0, left: 0, position:'fixed', 'z-index':9999});
         },
+    });
+
+     $(document).mouseup(function(e)
+    {
+        var container = $(".te_vertical_menu");
+        var edit_button = $(e.target.parentElement).attr('id');
+        // if the target of the click isn't the container nor a descendant of the container
+        if (!container.is(e.target) && container.has(e.target).length === 0 && edit_button != "edit-page-menu")
+        {
+            container.removeClass("te_open");
+            $("#wrapwrap").removeClass("te_menu_overlay");
+        }
+
     });
 });

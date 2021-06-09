@@ -19,8 +19,8 @@
      </t>
     <!--  Add checkbox option for choose dynamic menu  -->
      <t t-extend="wysiwyg.widgets.link">
-        <t t-jquery=".form-group.row.o_url_input:not(d-none)" t-operation="after">
-            <div class="form-group row dynamic_menu_option">
+        <t t-jquery="#o_link_dialog_button_opts_collapse" t-operation="before">
+            <div t-attf-class="form-group row dynamic_menu_option #{widget.isButton ? 'd-none' : ''}">
                 <label class="control-label col-md-3" for="is_dynamic_menu">Is Dynamic Menu</label>
                 <div class="col-sm-2">
                     <label class="o_switch" for="is_dynamic_menu">

@@ -11,8 +11,8 @@
                     <input type="hidden" id="price_slider_max" t-att-value="range_values[3]"/>
                     <div class="ept_price_slider_block">
                         <div class="price_filter_head">
-                            <i class="te_price_icon fa fa-caret-right"/>
                             <span class="m-0 te_pricerange_title">Price Range</span>
+                            <i class="te_price_icon fa fa-caret-right pull-right"/>
                             <a class="price_filter_reset">(Reset)</a>
                         </div>
                         <div class="te_pricerange_content">

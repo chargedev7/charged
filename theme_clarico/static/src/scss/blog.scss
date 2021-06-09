@@ -149,7 +149,7 @@
         padding: 8px 20px 8px 23px;
         @include position(relative);
         background: #eee;
-
+        border: 0 !important;
         &:before {
             content: '';
             @include position(absolute,10px,null,auto,10px);
@@ -585,4 +585,14 @@
             }
         }
 	}
+}
+.s_text_block{
+    .container{
+        .row{
+            .pb32{
+                padding-left: 0px;
+                padding-right: 0px;
+            }
+        }
+    }
 }

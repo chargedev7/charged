@@ -3,7 +3,7 @@
     <!--============================ Inclusion of editor js Files =======================-->
     <template id="assets_editor" inherit_id="website.assets_editor">
         <xpath expr="//script[last()]" position="after">
-            <script src="/emipro_theme_base/static/src/js/snippet/slider_builder_editor.js"
+            <script src="/emipro_theme_base/static/src/js/snippet/product_builder_editor.js"
 				type="text/javascript"/>
             <script src="/emipro_theme_base/static/src/js/snippet/slider_builder_helper.js"
 				type="text/javascript"/>
@@ -12,7 +12,7 @@
     <!--======================== Inclusion of JS Files ======================-->
     <template id="theme_assets_frontend_product_carousel" inherit_id="website.assets_frontend">
         <xpath expr="script[last()]" position="after">
-                <script type="text/javascript" src="/emipro_theme_base/static/src/js/frontend/product_slider.js"/>
+            <script type="text/javascript" src="/emipro_theme_base/static/src/js/frontend/product_slider.js"/>
         </xpath>
     </template>
 </odoo>

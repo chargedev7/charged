@@ -242,6 +242,15 @@
     opacity: 1;
     color: nth($f_color,28);
 }
+
+.te_slider_style_1{
+    .oe_custom_bg{
+        @include media-breakpoint-down(xs) {
+                  background-size: contain;
+                  padding: 20px 0 !important;
+                }
+    }
+}
 /*======================== 08. Slider Style 2 ================================*/
 @include media-breakpoint-down(sm)
 {
@@ -252,6 +261,14 @@
 		width:auto;
 		height: auto;
 	}
+}
+.te_slider_style_2{
+    .oe_custom_bg{
+        @include media-breakpoint-down(xs) {
+                  background-size: contain;
+//                   padding: 20px 0 !important;
+                }
+    }
 }
 /*======================= 09. Slider Style 4 ===========================*/
 .carousel-item.oe_img_bg
@@ -280,6 +297,21 @@
 .te_t_text_img_left_right img{
     max-height:510px;
 }
+.te_slider_style_4{
+        .carousel-control-prev,.carousel-control-next{
+            @include media-breakpoint-down(xs)
+                {
+                    display:block !important;
+                    top: 29%;
+                }
+            @include media-breakpoint-down(md)
+                {
+                    display:block !important;
+                    top: 29%;
+                }
+            }
+}
+
 /*===================== 10. Slider Style 5 ============================*/
 .te_t_shop_title_text
 {
@@ -305,6 +337,20 @@
 			padding-bottom:52px;
 		}
 	}
+.te_slider_style_5{
+        .carousel-control-prev,.carousel-control-next{
+            @include media-breakpoint-down(xs)
+                {
+                    display:block !important;
+                    top: 23%;
+                }
+            @include media-breakpoint-down(md)
+                {
+                    display:block !important;
+                    top: 23%;
+                }
+            }
+}
 /*========================== 11. Slider Style 6 ========================*/
 .te_t_s_cover_content
 {
@@ -876,6 +922,14 @@
 .te_slide_border{
 	@include border(1px,8,solid)
 	@include box-shadow(0px 0px 3px 0px rgba(0,0,0,0.2))
+}
+
+.te_3_columns_style_3 {
+    .s_col_no_bgcolor{
+        @include media-breakpoint-down(xs){
+            margin-bottom: 25px;
+        }
+    }
 }
 /*==================== 25. 3 Columns (Style 4) =====================*/
 .te_t3_col_bg_div
@@ -1658,6 +1712,9 @@
 		{
 			@include style(15,28);
 			padding-bottom: 20px;
+			@media (max-width: 1366px) and (min-width: 992px) {
+                font-size:1.510rem;
+            }
 			@include media-breakpoint-down(md)
 			{
 				font-size:nth($f_sizes,12);
@@ -2227,9 +2284,11 @@
 	{
 		padding: 0 20px;
 		margin-bottom: 10px;
+		text-align: center;
 	}
 	.te_4_col2_content
 	{
+	    text-align: left;
 		padding: 0.5rem 1.5rem;
 		span
 		{
@@ -2240,7 +2299,8 @@
 			line-height: 1.5;
 			font-weight: 600;
 			font-size:nth($f_sizes,8);
-			@include line-clamp(2,53px);
+// 			@include line-clamp(2,53px);
+            @include line-clamp(2,auto);
 		}
 		.te_extra_btn
 		{
@@ -3721,4 +3781,52 @@ font-size:nth($f_sizes,8);
 /* Extra page about us template 2 */
 .container.carousel.s_carousel.carousel-showmanymoveone.common_carousel_emp_ept {
     visibility: visible;
+}
+
+//  4 columns style 2
+.te_4_columns_style_2{
+    @include media-breakpoint-down(xs){
+        .te_heading_price{
+            font-size: 2.5rem;
+        }
+        .te_price_currency {
+            font-size: 1.0375rem;
+        }
+        .te_cost_validity {
+            font-size: 0.85rem;
+        }
+        .li_text {
+            font-size: 0.9375rem;
+        }
+        .py-3 {
+            padding-bottom: 0.8rem !important;
+            padding-top: 0.8rem !important;
+        }
+        .py-4 {
+            padding-bottom: 0.7rem !important;
+            padding-top: 0.7rem !important;
+        }
+    }
+    @include media-breakpoint-down(md){
+        .te_heading_price{
+            font-size: 2.5rem;
+        }
+        .te_price_currency {
+            font-size: 1.0375rem;
+        }
+        .te_cost_validity {
+            font-size: 0.85rem;
+        }
+        .li_text {
+            font-size: 0.9375rem;
+        }
+        .py-3 {
+            padding-bottom: 0.8rem !important;
+            padding-top: 0.8rem !important;
+        }
+        .py-4 {
+            padding-bottom: 0.7rem !important;
+            padding-top: 0.7rem !important;
+        }
+    }
 }

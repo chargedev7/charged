@@ -27,24 +27,52 @@ from odoo.addons.website_sale_wishlist.controllers.main import WebsiteSaleWishli
 
 _logger = logging.getLogger(__name__)
 
+
 class WebsiteSale(WebsiteSale):
 
     @http.route('/shop/products/autocomplete', type='json', auth='public', website=True)
     def products_autocomplete(self, term, options={}, **kwargs):
         """
-        After getting the product collection based on the search apply the category filter.
-        @Author : Angel Patel (24/09/2020)
+        category wise product search and blog, category and product search
         :return: res
         """
-        res = super(WebsiteSale, self).products_autocomplete(term, options={}, **kwargs)
-        if options.get('cat_id'):
-            product = []
-            for list in res.get('products'):
-                product_obj = request.env['product.template'].sudo().search([('id','=',list.get('product_template_id')),('public_categ_ids','child_of',int(options.get('cat_id')))])
-                if product_obj:
-                    product.append(list)
-            res = {'products': product}
+        if 'cat_id' in options.keys():
+            options['category'] = options.get('cat_id')
+        res = super(WebsiteSale, self).products_autocomplete(term, options=options, **kwargs)
+        res['blogs_count'] = 0
+        categories = blogs = []
+
+        if 'search_in' in options.keys() and request.website.is_advanced_search:
+            limit = options.get('limit', 5)
+            if not options.get('search_in') or options.get('search_in') == 'all':
+                categories = self.get_searched_category(term,
+                                                        limit) if request.website.allowed_search_category else False
+                blogs = self.get_searched_blog(term, limit) if request.website.allowed_search_blog else False
+                blogs_count = request.env['blog.post'].sudo().search_count(
+                    [('name', 'ilike', term), ('website_id', 'in', [False, request.website.id])])
+                res['blogs_count'] = blogs_count
+            elif options.get('search_in') == 'category':
+                categories = self.get_searched_category(term, limit)
+                res['products'] = {}
+            elif options.get('search_in') == 'blog':
+                blogs = self.get_searched_blog(term, limit)
+                blogs_count = request.env['blog.post'].sudo().search_count(
+                    [('name', 'ilike', term), ('website_id', 'in', [False, request.website.id]),
+                     ('website_published', '=', True)])
+                res['products'] = {}
+                res['blogs_count'] = blogs_count
+        res['categories'] = categories.read(['id', 'name']) if categories else False
+        res['blogs'] = blogs.read(['id', 'blog_id', 'name']) if blogs else False
         return res
+
+    def get_searched_category(self, term, limit):
+        return request.env['product.public.category'].sudo().search(
+            [('name', 'ilike', term), ('website_id', 'in', [False, request.website.id])], limit=limit)
+
+    def get_searched_blog(self, term, limit):
+        return request.env['blog.post'].sudo().search([('name', 'ilike', term), ('website_published', '=', True),
+                                                       ('website_id', 'in', [False, request.website.id])], limit=limit)
+
 
 class EmiproThemeBase(http.Controller):
 
@@ -52,9 +80,9 @@ class EmiproThemeBase(http.Controller):
     def get_banner_video_data(self, is_ios):
         template = request.env['ir.ui.view'].sudo().search([('key', '=', 'theme_clarico_vega.banner_video_template')])
         if template:
-            values ={
+            values = {
                 'banner_video_url': request.website.banner_video_url or False,
-                'is_ios' : is_ios,
+                'is_ios': is_ios,
             }
             response = http.Response(template="theme_clarico_vega.banner_video_template", qcontext=values)
             return response.render()
@@ -79,7 +107,6 @@ class EmiproThemeBase(http.Controller):
             response = http.Response(template="emipro_theme_base.dynamic_mega_menu_child", qcontext=values)
             return response.render()
 
-
     @http.route(['/quick_view_item_data'], type='json', auth="public", website=True)
     def get_quick_view_item(self, product_id=None):
         """
@@ -94,24 +121,6 @@ class EmiproThemeBase(http.Controller):
             }
             response = http.Response(template="emipro_theme_base.quick_view_container", qcontext=values)
             return response.render()
-
-    @http.route(['/get_brand_slider'], type='json', auth="public", website=True)
-    def get_brand_slider_data(self):
-        """
-        It's return the updated brand data through ajax
-        :return: brand slider template html
-        """
-        response = http.Response(template="emipro_theme_base.brand_slider_container")
-        return response.render()
-
-    @http.route(['/get_category_slider'], type='json', auth="public", website=True)
-    def get_category_slider_data(self):
-        """
-        It's return the updated category slider data through ajax
-        :return: category slider template html
-        """
-        response = http.Response(template="emipro_theme_base.category_slider_container")
-        return response.render()
 
     @http.route(['/shop/cart/update_custom'], type='json', auth="public", methods=['GET', 'POST'], website=True,
                 csrf=False)
@@ -134,8 +143,10 @@ class EmiproThemeBase(http.Controller):
             sale_order._cart_update(
                 product_id=int(product_id),
                 add_qty=add_qty,
+                set_qty=set_qty,
                 product_custom_attribute_values=product_custom_attribute_values,
-                set_qty=set_qty)
+                no_variant_attribute_values=no_variant_attribute_values,
+                )
             return True
         else:
             return False
@@ -215,9 +226,11 @@ class EmiproThemeBaseExtended(WebsiteSaleWishlist):
                 else:
                     new_prod_ids = products.filtered(
                         lambda r: r.currency_id._convert(r.lst_price, pricelist.currency_id,
-                                                              request.website.company_id, date=fields.Date.today()) >= float(cust_min_val) and
+                                                         request.website.company_id, date=fields.Date.today()) >= float(
+                            cust_min_val) and
                                   r.currency_id._convert(r.lst_price, pricelist.currency_id,
-                                                              request.website.company_id, date=fields.Date.today()) <= float(cust_max_val)).ids
+                                                         request.website.company_id, date=fields.Date.today()) <= float(
+                            cust_max_val)).ids
                 domain += [('id', 'in', new_prod_ids)]
             else:
                 domain = [('id', '=', False)]
@@ -253,6 +266,10 @@ class EptWebsiteSaleVariantController(VariantController):
         pricelist = request.website.get_current_pricelist()
         suitable_rule = False
         res.update({'is_offer': False})
+        # set internal reference
+        product_temp = request.env['product.template'].sudo().search([('id', '=', product_template_id)])
+        res.update({
+                       'sku_details': product.default_code if product_temp.product_variant_count > 1 else product_temp.default_code})
         try:
             if pricelist and product:
                 vals = pricelist._compute_price_rule(products_qty_partner)
@@ -292,14 +309,21 @@ class Website(Website):
         response = super(Website, self).web_login(*args, **kw)
         if login_form_ept:
             if response.is_qweb and response.qcontext.get('error', False):
-                return json.dumps({'error': response.qcontext.get('error', False), 'login_success': False})
+                return json.dumps(
+                    {'error': response.qcontext.get('error', False), 'login_success': False, 'hide_msg': False})
             else:
                 if request.params.get('login_success', False):
+                    uid = request.session.authenticate(request.session.db, request.params['login'],
+                                                       request.params['password'])
+                    user = request.env['res.users'].browse(uid)
                     redirect = '1'
-                    if request.env['res.users'].browse(request.uid).has_group('base.group_user'):
+                    if user.totp_enabled:
+                        redirect = request.env(user=uid)['res.users'].browse(uid)._mfa_url()
+                        return json.dumps({'redirect': redirect, 'login_success': True, 'hide_msg': True})
+                    if user.has_group('base.group_user'):
                         redirect = b'/web?' + request.httprequest.query_string
                         redirect = redirect.decode('utf-8')
-                    return json.dumps({'redirect': redirect, 'login_success': True})
+                    return json.dumps({'redirect': redirect, 'login_success': True, 'hide_msg': False})
         return response
 
 

@@ -46,25 +46,7 @@
                              <label for="is_featured_brand" string="Featured brand" />
                              <field name="is_featured_brand" nolabel="1"/>
                          </group>
-                         <group>
-                             <field name="allow_in_brand_slider"/>
-                         </group>
                      </group>
-
-                    <!--<div groups="website.group_multi_website">
-                        <label for="website_id" string="Website" class="col-sm-1 p-0 pt-3"/>
-                        <field name="website_id" domain="[('theme_id.author','like','Emipro Technologies Pvt. Ltd.')]"
-                               options="{'no_quick_create': True, 'no_create_edit' : True}"/>
-                    </div>
-                    <div>
-                        <label for="is_featured_brand" string="Is featured brand" />
-                        <field name="is_featured_brand"/>
-                    </div>
-                    <div>
-                        <label for="allow_in_brand_slider"/>
-                        <field name="allow_in_brand_slider"/>
-                    </div>-->
-
                     <xpath>
                         <notebook>
                             <page string="Products">
@@ -137,6 +119,7 @@
         <field name="model">product.brand.ept</field>
         <field name="arch" type="xml">
             <tree string="Brands">
+                <field name="sequence" widget="handle"/>
                 <field name="name" string="Name"/>
                 <field name="is_brand_page" string="Is Brand Page"/>
             </tree>
@@ -149,8 +132,7 @@
         <field name="view_mode">kanban,tree,form</field>
     </record>
 
-    <menuitem
-            name="Product Brands"
+    <menuitem name="Product Brands"
             id="menu_product_brand_ept"
             action="action_product_brand_ept"
             parent="website.menu_website_global_configuration"/>

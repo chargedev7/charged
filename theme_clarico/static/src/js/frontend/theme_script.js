@@ -3,7 +3,6 @@
         02. Page Scroll up
         03. Theme Wishlist
         04. Shop Events
-        05. cart Popover
         06. Theme layout
         07. Compare short name
 **************************************************/
@@ -26,6 +25,8 @@ odoo.define('theme_clarico.theme_script', function(require) {
         read_events: {
             'click .te_srch_icon': '_onSearchClickOpen',
             'click .te_srch_close': '_onSearchClickClose',
+            'mouseenter .te_dynamic_ept': '_onMouseEnterOpen',
+            'mouseleave .te_dynamic_ept': '_onMouseLeaveClose',
         },
         start: function() {
             $('.variant_attribute  .list-inline-item').find('.active').parent().addClass('active_li');
@@ -34,8 +35,28 @@ odoo.define('theme_clarico.theme_script', function(require) {
                 $parent.find('.css_attribute_color').parent('.list-inline-item').removeClass("active_li");
                 $parent.find('.css_attribute_color').filter(':has(input:checked)').parent('.list-inline-item').addClass("active_li");
             });
-
         },
+
+        _onMouseEnterOpen: function(ev){
+            if ($(window).innerWidth() > 1200) {
+             var self = ev.currentTarget;
+                 $(self).addClass('open');
+                 $(self).find(".dropdown-menu").addClass('te_mega_animation');
+                 $(self).removeClass('show');
+                 $(self).find('.dropdown-menu').removeClass('show');
+            }
+        },
+        _onMouseLeaveClose: function(ev){
+            if ($(window).innerWidth() > 1200) {
+                var self = ev.currentTarget;
+                $(self).removeClass('open');
+                $(self).find(".dropdown-menu").removeClass('te_mega_animation');
+                $(self).removeClass('show');
+                $(self).find('.dropdown-menu').removeClass('show');
+            }
+        },
+
+
         _onSearchClickOpen: function(ev) {
             var self = ev.currentTarget;
             //style1
@@ -87,6 +108,36 @@ odoo.define('theme_clarico.theme_script', function(require) {
                     }, 500);
                 }
             }
+            //style7 and style9
+            if ($(".te_header_6_srch_icon, .te_header_7_srch_icon").length) {
+                if($(window).width() <= 767){
+                    if($('.te_header_7_srch_icon').length){
+                        $('.navbar-expand-md .navbar-toggler, .te_header_7_srch_icon, header .navbar-brand').hide();
+                    }
+                    else{
+                        $(".navbar-expand-md .navbar-toggler").hide();
+                    }
+                }
+                if ($(window).width() <= 991) {
+                    if($('.te_header_7_srch_icon').length){
+                        $(".te_header_7_srch_icon, div#top_menu_collapse .navbar-nav, div#top_menu_collapse_clone .navbar-nav").hide();
+                    }
+                    else{
+                        $(".navbar-expand-md .navbar-nav, .te_header_right_icon, .te_header_navbar label.label_checkbox, div#top_menu_collapse .navbar-nav").hide();
+                    }
+                }
+                $(".te_header_search input").css("width","100%");
+                setTimeout(function(){
+                    if ($(window).width() >= 992) {
+                        $(".te_header_right_icon").hide();
+                        $(".navbar-expand-md .navbar-nav").hide();
+                    }
+                    $(".te_header_search_popover").fadeIn(200);
+                }, 500);
+                setTimeout(function(){
+                    $('input[name="search').focus();
+                }, 500);
+            }
         },
         _onSearchClickClose: function(ev) {
             var self = ev.currentTarget;
@@ -113,6 +164,29 @@ odoo.define('theme_clarico.theme_script', function(require) {
             if ($(".te_searchform__popup").length) {
                 $(".te_searchform__popup").removeClass("open");
                 $(".te_srch_icon").show();
+            }
+            //style7 and style9
+            if ($(".te_header_6_srch_icon, .te_header_7_srch_icon").length) {
+                $(".te_header_right_icon, .navbar-expand-md .navbar-nav").show();
+                $(".te_header_search_popover").hide();
+                $(".te_header_search_popover input").css("width", "0%");
+                $(".te_srch_icon").css("display", "flex");
+                if($(window).width() <= 767){
+                    if($('.te_header_7_srch_icon').length){
+                        $('.navbar-expand-md .navbar-toggler, .te_header_11_srch_icon, header .navbar-brand').fadeIn(300);
+                    }
+                    else{
+                        $(".navbar-expand-md .navbar-toggler").fadeIn(300);
+                    }
+                }
+                if ($(window).width() <= 991) {
+                    if($('.te_header_7_srch_icon').length){
+                        $("div#top_menu_collapse .navbar-nav, div#top_menu_collapse_clone .navbar-nav").fadeIn(400);
+                    }
+                    else{
+                        $(".te_header_right_icon, .navbar-expand-md .navbar-nav, .te_header_navbar label.label_checkbox").fadeIn(400);
+                    }
+                }
             }
         },
     });
@@ -382,77 +456,6 @@ odoo.define('theme_clarico.theme_script', function(require) {
   });
 
     //------------------------------------------
-    // 05. cart Popover
-    //------------------------------------------
-    var timeout;
-    sAnimations.registry.websiteSaleCartLink = sAnimations.Class.extend({
-        selector: '.o_wsale_my_cart a[href$="/shop/cart"]',
-        events: {
-            'mouseenter': '_onMouseEnter',
-            'mouseleave': '_onMouseLeave',
-            'click': '_onClickCart',
-        },
-        start: function() {
-            var def = this._super.apply(this, arguments);
-            //var def
-            if (this.editableMode) {
-                return def;
-            }
-             this.$el.popover({
-              trigger: 'manual',
-              animation: true,
-              html: true,
-              title: function () {
-                  return _t("My Cart");
-              },
-              container: 'body',
-              placement: 'auto',
-              template: '<div class="popover mycart-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
-            });
-            return def;
-        },
-        _onMouseEnter: function (ev) {
-            var self = this;
-            clearTimeout(timeout);
-            $(this.selector).not(ev.currentTarget).popover('hide');
-            timeout = setTimeout(function () {
-                if (!self.$el.is(':hover') || $('.mycart-popover:visible').length) {
-                    return;
-                }
-                self._popoverRPC = $.get("/shop/cart", {
-                    type: 'popover',
-                }).then(function (data) {
-                    self.$el.data("bs.popover").config.content = data;
-                    self.$el.popover("show");
-                    $('.popover').on('mouseleave', function () {
-                        self.$el.trigger('mouseleave');
-                    });
-                });
-            }, 300);
-        },
-        _onMouseLeave: function (ev) {
-            var self = this;
-            setTimeout(function () {
-                if ($('.popover:hover').length) {
-                    return;
-                }
-                if (!self.$el.is(':hover')) {
-                   self.$el.popover('hide');
-                }
-            }, 1000);
-        },
-        _onClickCart: function(ev) {
-            clearTimeout(timeout);
-            if (this._popoverRPC && this._popoverRPC.state() === 'pending') {
-                ev.preventDefault();
-                var href = ev.currentTarget.href;
-                this._popoverRPC.then(function () {
-                    window.location.href = href;
-                });
-            }
-        },
-    });
-    //------------------------------------------
     // 06. Theme layout
     //------------------------------------------
         $(document).ready(function($) {
@@ -492,6 +495,12 @@ odoo.define('theme_clarico.theme_script', function(require) {
                 }
             });
         }
+
+        var mainHeight = $('#wrapwrap > main').height() + 250;
+        if (mainHeight) {
+            $('#wrapwrap > main').css("min-height", mainHeight);
+        }
+
         //extra menu dropdown
         $('.o_extra_menu_items .dropdown-menu').css("display", "none")
         $('li.o_extra_menu_items .dropdown').click(function(event) {
@@ -499,50 +508,140 @@ odoo.define('theme_clarico.theme_script', function(require) {
             $(this).find(".dropdown-menu").slideToggle();
         });
         //Header top when transparent header
-        var header_before_height = $(".te_header_before_overlay").outerHeight();
-        if ($("body").find(".o_header_overlay").length > 0) {
-            $("header:not(.o_header_affix)").addClass("transparent_top")
-            $(".transparent_top").css("top", header_before_height);
-            $(".o_header_affix.affix").removeClass("transparent_top")
-        }
+//        var header_before_height = $(".te_header_before_overlay").outerHeight();
+//        if ($("body").find(".o_header_overlay").length > 0) {
+//            $("header:not(.o_header_affix)").addClass("transparent_top")
+//            $(".transparent_top").css("top", header_before_height);
+//            $(".o_header_affix.affix").removeClass("transparent_top")
+//        }
         //Category mega menu
+        if($('.te_dynamic_ept'))
+		{
+		    setTimeout(function(){
+			$('.te_dynamic_ept >.dropdown-toggle').removeAttr('data-toggle');
+			$('.te_dynamic_ept >.dropdown-toggle').removeAttr('aria-expanded');
+			},100);
+		}
+		var li_count = $("#top_menu_collapse >#top_menu >li").length;
+        var li_pos = $('.te_dynamic_ept').index()+1;
         $("#custom_menu li").each(function() {
             var has_ctg = $(this).find("ul.t_custom_subctg").length > 0
             if (has_ctg) {
                 $(this).append("<span class='ctg_arrow fa fa-angle-right' />")
-                $(".ctg_arrow").click(function(ev) {
-                    ev.preventDefault();
-                    ev.stopPropagation();
-                    var self = $(this).siblings("ul.t_custom_subctg");
-                    var ul_index = $(self).parents("ul").length;
-                    $(self).stop().animate({
-                        width: "100%"
+                var ul_index = 0;
+                if(li_pos > li_count/2)
+                {
+                    $(this).children("#custom_recursive").css({
+                        "transform": "translateX(-20px)",
                     });
-                    $(self).css({
-                        "display": "block",
-                        "transition": "0.3s easeout",
-                        "z-index": ul_index
-                    })
-                    $(self).parent().parent(".t_custom_subctg").css("overflow-y", "hidden");
-                    $(self).parent().parent(".t_custom_subctg").scrollTop(0);
-                    $(this).parents("#custom_menu").scrollTop(0);
-                    $(this).parents("#custom_menu").css("overflow-y", "hidden");
-                })
-                $(this).find("ul.t_custom_subctg").children(".te_prent_ctg_heading").click(function(ev) {
-                    ev.preventDefault();
-                    ev.stopPropagation();
-                    $(this).parent("ul#custom_recursive").stop().animate({
-                        width: "0"
-                    }, function() {
-                        $(this).css("display", "none")
-                        $(this).parent().parent(".t_custom_subctg").css("overflow-y", "auto");
+                }
+                if($(document).find('#wrapwrap').hasClass('o_rtl')){
+                    if(li_pos > li_count/2)
+                    {
+                        $(this).children("#custom_recursive").css({
+                            "transform": "translateX(20px)",
+                        });
+                    }
+                    else
+                    {
+                        $(this).children("#custom_recursive").css({
+                            "transform": "translateX(-20px)",
+                        });
+                    }
+                }
+                if ($(window).width() > 1200) {
+                    $(document).on('mouseenter',"#custom_menu_li",function(ev) {
+                        var li_place = $(this).position().top;
+                        $(this).children("#custom_recursive").css("top", li_place);
+                        var self = $(this).children("#custom_recursive");
+                        if($(this).children("#custom_recursive").length > 0)
+                        {
+                            ul_index = $(self).parents("ul").length == 0 ? $(self).parents("ul").length : ul_index + 1;
+                            $(self).css({
+                                    "opacity":"1",
+                                    "visibility": "visible",
+                                    "transform": "translateX(-10px)",
+                                    "transition": "all 0.2s",
+                            });
+                            if(li_pos > li_count/2) {
+                                $(self).css({
+                                      "left": "100%",
+                                      "right": "auto",
+                                      "transform": "translateX(-10px)",
+
+                                });
+                            }
+                            if($(document).find('#wrapwrap').hasClass('o_rtl')){
+                                $(self).css({
+                                    "transform": "translateX(12px)",
+                                });
+                                if(li_pos > li_count/2) {
+                                    $(self).css({
+                                        "right": "100%",
+                                        "left": "auto",
+                                        "transform": "translateX(12px)",
+                                    });
+                                }
+                            }
+                        }
                     });
-                })
+                    $(document).on('mouseleave',"#custom_menu_li",function(ev) {
+                        $(this).children("ul#custom_recursive").css({
+                            "opacity":"0",
+                            "visibility": "hidden",
+                            "transform": "translateX(20px)",
+                        });
+                        if(li_pos > li_count/2) {
+                            $(this).children("ul#custom_recursive").css({
+                                "transform": "translateX(-20px)",
+                            });
+                        }
+                    });
+                }
             }
         })
-        $("#custom_menu > li > ul.t_custom_subctg > .te_prent_ctg_heading").click(function() {
-            $(this).parents("#custom_menu").css("overflow-y", "auto");
-        })
+        if ($(window).width() <= 1200) {
+            $(".te_dynamic_ept >a").append('<span class = "fa fa-angle-down te_icon" />');
+	        $('.te_icon').attr('data-toggle', 'true');
+            $('.te_icon').attr('aria-expanded', 'true');
+	        $(document).on('click',"span.te_icon",function(ev) {
+	        	if( $(ev.target).is('.te_icon') ) {
+			       	ev.preventDefault();
+					$(this).parent("a").siblings('.te_custom_submenu').slideDown('slow');
+					$(this).addClass('te_icon_ctg');
+	        	}
+	        });
+	        $(document).mouseup(function(e)
+			{
+			    var container = $(".te_dynamic_ept");
+			    if (!container.is(e.target) && container.has(e.target).length === 0)
+			    {
+			        $('.te_icon').parent("a").siblings('.te_custom_submenu').slideUp('slow');
+			    }
+			});
+            $(document).keyup(function(e) {
+                 if (e.keyCode == 27) {
+                    $('.te_icon').parent("a").siblings('.te_custom_submenu').slideUp('slow');
+                 }
+            })
+        	$(document).on('click',"span.te_icon_ctg",function(ev) {
+        		$(this).parent("a").siblings('.te_custom_submenu').slideUp('slow');
+        		$(this).removeClass('te_icon_ctg');
+        	});
+        	$(document).on('click',".ctg_arrow",function(ev) {
+		        $(this).toggleClass('te_down_ctg_icon');
+				if($(this).hasClass('te_down_ctg_icon'))
+				{
+				    ev.preventDefault();
+				    $(this).siblings("ul#custom_recursive").slideDown('slow');
+				    return false;
+				}
+				else
+				{
+		            $(this).siblings("ul#custom_recursive").slideUp('slow');
+			    }
+			});
+        }
         //Changed search form action in theme's search when website search is installed
         if ($("body").find(".website_search_form_main").length > 0) {
             $(".te_header_search,.te_searchform__popup").each(function() {
@@ -591,6 +690,7 @@ odoo.define('theme_clarico.theme_script', function(require) {
     sAnimations.registry.productTab = sAnimations.Class.extend({
         selector: "#wrapwrap",
         start: function () {
+            $("img.lazyload").lazyload();
             self = this;
             self.selectProductTab();
         },
@@ -665,6 +765,7 @@ odoo.define('theme_clarico.theme_script', function(require) {
             rewind: true,
             rtl: owl_rtl,
             margin: 10,
+            lazyLoad:true,
             nav: true,
             dots: false,
             autoplay: true,
@@ -721,6 +822,7 @@ odoo.define('theme_clarico.theme_script', function(require) {
                 items:1,
                 loop: $('#len-ept-image').val() > 1 ? true : false,
                 rewind: true,
+                dots: false,
             }).on('changed.owl.carousel', function (event) {
                 // On change of main item to trigger thumbnail item
                 let currentIndex = event.item.index + slider_length;
@@ -784,9 +886,191 @@ odoo.define('theme_clarico.theme_script', function(require) {
 
     sAnimations.registry.StickyGallery = sAnimations.Animation.extend({
         selector: '#wrapwrap',
-        _stickyGallery: function (ev) {
-            return true;
-        }
+         effects: [{
+            startEvents: 'scroll',
+            update: '_stickyGallery',
+        }],
+        init: function () {
+            this._super(...arguments);
+            this.$sticky = $('#product_detail .row.te_row_main > .col-lg-6:first-child');
+            if ($(this.$sticky).length) {
+                this.stickyTop = this.$sticky.offset().top;
+            }
+            this.header_height = 20;
+            if($('header#top').length && !$('header').hasClass('o_header_sidebar')) {
+                if($('header nav').hasClass('te_header_navbar')) {
+                    this.header_height = $('header nav').height() + 20;
+                } else {
+                    this.header_height = $('header').height() + 20;
+                }
+                if($('header nav').hasClass('header10')) {
+                    this.header_height = $('header nav').height() - 60;
+                }
+            }
+        },
+        _stickyGallery: function (scroll) {
+            if($( window ).width() > 991) {
+                if (!!this.$sticky.offset() && this.$sticky) {
+                    if (this.stickyTop < scroll+this.header_height+this.header_height) {
+                        this.$sticky.css({ position: 'sticky', top: this.header_height });
+                        this.$sticky.addClass('sticky-media');
+                    } else {
+                        this.$sticky.css({ position: 'relative', top: 'initial'});
+                        this.$sticky.removeClass('sticky-media');
+                    }
+                }
+            }
+            // Sticky add to cart bar
+            if($('.product_details_sticky').length){
+                if($('div#product_details a#add_to_cart').length){
+                    var getPriceHtml = $('div#product_details .product_price').html();
+                    var stickHeight = $('.product_details_sticky .prod_details_sticky_div').height();
+                    var cookie_height = 0;
+                    if($('.o_cookies_discrete .s_popup_size_full').length) {
+                       cookie_height = $('.s_popup_size_full .modal-content').height()
+                       stickHeight = cookie_height + stickHeight
+                    }
+                    var fixIconHeight8 = $('.te_header_icon_right').height();
+                    var fixIconHeight9 = $('.head_9_rest_icons').height();
+                    var footerPosition = $("main").height() - $("#footer").height();
+                    if ( scroll > $('div#product_details a#add_to_cart').offset().top && scroll < footerPosition - 200 ) {
+                            //$('footer#bottom').css('padding-bottom', stickHeight+'px'); /* Add below spaces on the footer */
+                            if ($(window).width() >= 768){
+                                $('div#wrapwrap .product_details_sticky').css('bottom', cookie_height+'px');
+                                $('div#wrapwrap .product_details_sticky').fadeIn();
+                            }
+                            if ($(window).width() >= 768){
+                                $('#product_detail').find('.o_product_feature_panel').css('bottom',stickHeight+'px').fadeIn();
+                            }
+                            /* Display prices on add to cart sticky*/
+                            if( $( ".js_product.js_main_product" ).hasClass( "css_not_available" )){
+                               $('div#wrapwrap .prod_price').html('');
+                               //$(".product_details_sticky .prod_add_cart #add_to_cart, .product_details_sticky .prod_add_cart #buy_now").addClass('disabled');
+                            }
+                            else{
+                                $('div#wrapwrap .prod_price').html(getPriceHtml);
+                                //$(".product_details_sticky .prod_add_cart #add_to_cart, .product_details_sticky .prod_add_cart #buy_now").removeClass('disabled');
+                            }
+
+                            $(".product_details_sticky .prod_add_cart #add_to_cart").click(function(e){
+                                if($('body').hasClass('editor_enable')){
+                                    e.stopPropagation();
+                                }
+                                else{
+                                    $("div#product_details .js_product.js_main_product #add_to_cart").trigger( "click" );
+                                    return false;
+                                }
+                            });
+                            $(".product_details_sticky .prod_add_cart #buy_now").click(function(e){
+                                if($('body').hasClass('editor_enable')){
+                                    e.stopPropagation();
+                                }
+                                else{
+                                    $("div#product_details .js_product.js_main_product #buy_now").trigger( "click" );
+                                    return false;
+                                }
+                            });
+                    } else {
+                        if ($(window).width() < 768){
+                        }
+                        else{
+                            $('#product_detail').find('.o_product_feature_panel').css('bottom', '0px');
+                            $('div#wrapwrap .product_details_sticky').css('bottom', cookie_height+'px');
+                            $('div#wrapwrap .product_details_sticky').fadeOut();
+                        }
+                    }
+
+                    /* Mobile view sticky add to cart */
+                    if ($(window).width() <= 767){
+                        var relativeBtn = $(".relative_position_cart").offset().top - $("main").offset().top;
+                        var header8 = $('.te_header_icon_right').height();
+                        var header9 = $('.head_9_rest_icons').height();
+                        if (relativeBtn > scroll) {
+                            if( $('.te_header_icon_right').length ){
+                                $('div#wrapwrap .product_details_sticky').css({'display':'block', 'position':'fixed', 'bottom': header8+'px', 'top':'initial'});
+                            }
+                            else if( $('.head_9_rest_icons').length ){
+                                $('div#wrapwrap .product_details_sticky').css({'display':'block', 'position':'fixed', 'bottom': header9+'px', 'top':'initial'});
+                            }
+                            else{
+                                $('div#wrapwrap .product_details_sticky').css({'display':'block', 'position':'fixed', 'bottom': cookie_height+'px', 'top':'initial'});
+                            }
+                        }
+                        else{
+                            $('div#wrapwrap .product_details_sticky').hide();
+                        }
+                    }
+
+                }
+            }
+            var HHeight = $('header#top').height();
+            if (scroll >= 72) {
+                $('body').addClass('fixed-header-bar');
+            } else {
+                $('body').removeClass('fixed-header-bar');
+            }
+            /* For Header 11 scroll top*/
+            if (scroll >= 44) {
+                $('body').addClass('fixed-header-top-bar');
+            } else {
+                $('body').removeClass('fixed-header-top-bar');
+            }
+            if($('#wrapwrap').hasClass('homepage')){
+                $('#wrapwrap').addClass('header_top_overlay');
+                $('#wrapwrap:not(.header_top_overlay)').css("margin-top", HHeight);
+                if (scroll >= 196) {
+                    $('body').addClass('fixed-header');
+                } else {
+                    $('body').removeClass('fixed-header');
+                }
+            }
+            if ($('.te_header_navbar_8').length) {
+                var headerHeight = $('.te_header_navbar_8').height();
+                if (scroll > headerHeight) {
+                    $('body').addClass('fixed-header-8-bar');
+                    $('.te_header_navbar_8').addClass('start-sticky');
+                } else {
+                    $('body').removeClass('fixed-header-8-bar');
+                    $('.te_header_navbar_8').removeClass('start-sticky');
+                }
+            }
+            /* Prevent search bar while scrolling header */
+            if($('.navbar-light.navbar-expand-lg').length){
+                /* odoo default header search */
+                if ($("header .te_searchform__popup.open").length) {
+                    $('header').css({'transform':'none','transition':'none'});
+                }
+            }
+            if ($('.te_header_navbar').length) {
+                var headerHeight = $('.te_header_navbar').height();
+                if ( scroll > headerHeight ) {
+                    if($('header').hasClass('o_header_affixed') && !$("header.o_header_affixed").hasClass("o_header_is_scrolled")){
+                      if ($(".te_header_1_right").length) {
+                          $(".te_search_popover").removeClass("visible");
+                          $('.te_srch_close').hide();
+                          $(".te_srch_icon").show();
+                      }
+                      if ($(window).width() < 768) {
+                         if ($(".te_header_style_2_right").length || $(".te_header_style_3_inner_first").length) {
+                             $(".te_search_popover").removeClass("visible");
+                             $('.te_srch_close').hide();
+                             $(".te_srch_icon").show();
+                         }
+                      }
+                      if ($(".te_header_4_search").length) {
+                          $(".te_search_4_form").removeClass("open_search");
+                          $(".te_search_icon_4").css("display", "inline-block");
+                      }
+                      if($(".te_searchform__popup").length){
+                         $(".te_searchform__popup").removeClass("open");
+                         $(".te_srch_icon").show();
+                      }
+                      $(".search_btn_close").trigger('click');
+                      $('.o_wsale_products_searchbar_form .dropdown-menu.show').removeClass('show');
+                    }
+                }
+            }
+        },
     });
 
     sAnimations.registry.StickyFilter = sAnimations.Animation.extend({
@@ -847,10 +1131,10 @@ odoo.define('theme_clarico.theme_script', function(require) {
         var product_detail = new sAnimations.registry.product_detail();
         product_detail.productGallery();
     });
-    $(".o_portal_my_doc_table tr").click(function(){
+    /*$(".o_portal_my_doc_table tr").click(function(){
       window.location = $(this).find('td > a').attr("href");
       return false;
-    });
+    });*/
 
     publicWidget.registry.productsRecentlyViewedSnippet.include({
         /*
@@ -874,5 +1158,43 @@ odoo.define('theme_clarico.theme_script', function(require) {
 
     $(window).on("orientationchange",function(){
       location.reload();
+    });
+
+    /* Issue for header is disabled while scroll up the page */
+    publicWidget.registry.StandardAffixedHeaderEpt = publicWidget.registry.StandardAffixedHeader.extend({
+        /**
+         * Called when the window is scrolled
+         *
+         * @private
+         * @param {integer} scroll
+         */
+        _updateHeaderOnScroll: function (scroll) {
+            const reachPosScrolled = (scroll > this.scrolledPoint + this.topGap);
+            // Show/hide header
+            if (this.fixedHeaderShow !== reachPosScrolled) {
+                this.$el.css('transform', reachPosScrolled ? `translate(0, -${this.topGap}px)` : 'translate(0, 0)');
+                this.fixedHeaderShow = reachPosScrolled;
+                this._adaptToHeaderChange();
+            }
+            this._super(...arguments);
+        },
+    });
+
+    sAnimations.registry.AosAnimate = sAnimations.Animation.extend({
+        selector: '#wrapwrap',
+        effects: [{
+            startEvents: 'scroll',
+            update: '_aosRefresh',
+        }],
+        init: function () {
+            this._super(...arguments);
+            this.windowWidth = $(window).width();
+        },
+        _aosRefresh: function (scroll) {
+            /*Refresh AOS on scroll the page */
+            if(this.windowWidth > 767) {
+                AOS.refresh();
+            }
+        }
     });
 });

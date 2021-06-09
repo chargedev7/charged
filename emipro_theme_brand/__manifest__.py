@@ -10,7 +10,6 @@
     'data': [
         'views/product_template.xml',
         'views/product_brand_ept.xml',
-        'templates/assets.xml',
 	    'security/ir.model.access.csv',
     ],
 

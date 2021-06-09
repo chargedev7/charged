@@ -22,16 +22,13 @@ class ProductBrandEpt(models.Model):
         compute='_compute_products_count',
         help='It shows the number of product counts',
     )
+    sequence = fields.Integer(help="Gives the sequence order when displaying a list of product Brands.", index=True,
+                              default=10)
     is_brand_page = fields.Boolean(string='Is Brand Page',help="It will set the separate landing page for this brand")
     brand_page = fields.Many2one("website.page", string="Brand Page",help="Select the brand page which you want to set for this brand.")
     is_featured_brand = fields.Boolean(string='Is Featured Brand')
-    allow_in_brand_slider = fields.Boolean(string='Allow In Brand Slider',
-                                           help="You can set this brand in Brand carousel snippets.")
 
-    @api.constrains('allow_in_brand_slider')
-    def validate_brand_carousel(self):
-        if not self.logo and self.allow_in_brand_slider:
-            raise ValidationError(_("Please set the brand image before set this in carousel"))
+
 
     @api.depends('product_ids')
     def _compute_products_count(self):

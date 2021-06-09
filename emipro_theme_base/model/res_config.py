@@ -43,17 +43,20 @@ class res_config(models.TransientModel):
     is_price_range_filter = fields.Boolean(string='Price Range Filter', related='website_id.is_price_range_filter', readonly=False, help="Enable the price range filter")
     price_filter_on = fields.Selection(related='website_id.price_filter_on',
                                          readonly=False)
+    is_advanced_search = fields.Boolean(string='Enable Advanced Search', related='website_id.is_advanced_search', readonly=False, help="Enable the advance search")
+    allowed_search_category = fields.Boolean(string='Allow Search In Category',related='website_id.allowed_search_category', readonly=False)
+    allowed_search_blog = fields.Boolean(string='Enable Advance Blog',related='website_id.allowed_search_blog', readonly=False)
 
     @api.onchange('is_load_more')
     def get_value_icon_load_more(self):
         if self.is_load_more == False:
-            img_path = get_resource_path('theme_clarico_vega', 'static/src/img/Loadmore.gif')
+            img_path = get_resource_path('emipro_theme_base', 'static/src/img/Loadmore.gif')
             with tools.file_open(img_path, 'rb') as f:
                 self.load_more_image = base64.b64encode(f.read())
 
     @api.onchange('is_lazy_load')
     def get_value_icon_lazy_load(self):
         if self.is_lazy_load == False:
-            img_path = get_resource_path('theme_clarico_vega', 'static/src/img/Lazyload.gif')
+            img_path = get_resource_path('emipro_theme_base', 'static/src/img/Lazyload.gif')
             with tools.file_open(img_path, 'rb') as f:
                 self.lazy_load_image = base64.b64encode(f.read())

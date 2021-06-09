@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--====== Product slider ====-->
+    <template id="p_slider" name="Product Snippet Builder">
+        <section class="pt8 pb8">
+            <div class="js_slider_snippet" name="product-slider"
+                 data-isemipro='true'>
+                <div class="css_non_editable_mode_hidden o_not_editable">
+                    <div class="missing_option_warning alert alert-info rounded-0 fade show d-print-none">
+                        Your Snippet data will be displayed here.This message is displayed because you have not
+                        configured the snippet yet.
+                        <br/>
+                        Check the document and video for the configuration.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!--============= Product slider options ===================-->
+    <template id="product_slider_options" name="Product slider options"
+              inherit_id="website.snippet_options">
+        <xpath expr="//div" position="after">
+            <div data-js='product_list_slider' data-selector=".js_slider_snippet"
+                 data-drop-near="[data-oe-field='body_html']:not(:has(.o_layout)) > , .oe_structure > "
+                 data-drop-in="[data-oe-field='body_html']:not(:has(.o_layout)), .oe_structure">
+                <we-button data-edit_slider="" data-no-preview="true">Configure Slider</we-button>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- =============================== Slider Error Message =======================-->
+    <template id="slider_error_message">
+        <div contenteditable="false" groups="website.group_website_designer">
+            <div class="missing_option_warning alert alert-info rounded-0 fade show d-print-none">
+                In case of misconfiguration, no product is found and no price list is configured, Slider will not be
+                displayed.
+                <br/>
+            </div>
+        </div>
+    </template>
+
+    <!-- =============================== Slider Edit Message =======================-->
+    <template id="slider_edit_message" >
+        <div  contenteditable="false" groups="website.group_website_designer" class="slider_edit_msg d-none">
+            <div class="missing_option_warning o_not_editable alert alert-info rounded-0 fade show d-print-none">
+               Select section for edit dynamic snippet configuration or remove snippet. Check the document and video for more help.
+            </div>
+        </div>
+    </template>
+
+    <!--====== Category  slider ====-->
+    <template id="category_slider" name="Category Builder">
+        <section class="pt4 pb4">
+            <div class="js_category_brand_snippet"
+                 data-isemipro='true' name="category-slider" data-name="category-slider">
+                <div class="css_non_editable_mode_hidden o_not_editable">
+                    <div class="missing_option_warning alert alert-info rounded-0 fade show d-print-none">
+                        Your Snippet data will be displayed here.This message is displayed because you have not configured the snippet yet.<br/> Check the document and video for the configuration.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!--====== Brand  slider ====-->
+    <template id="brand_slider" name="Brand Builder">
+        <section class="pt4 pb4">
+            <div class="js_category_brand_snippet"
+                 data-isemipro='true' name="brand-slider" data-name="brand-slider">
+                <div class="css_non_editable_mode_hidden o_not_editable">
+                    <div class="missing_option_warning alert alert-info rounded-0 fade show d-print-none">
+                        Your Snippet data will be displayed here.This message is displayed because you have not configured the snippet yet.<br/> Check the document and video for the configuration.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!--================ Category and brand slider options ===================-->
+    <template id="slider_options" name="Slider options"
+              inherit_id="website.snippet_options">
+        <xpath expr="//div" position="after">
+            <div data-js='category_brand_slider' data-selector=".js_category_brand_snippet"
+                 data-drop-near="[data-oe-field='body_html']:not(:has(.o_layout)) > , .oe_structure > "
+                 data-drop-in="[data-oe-field='body_html']:not(:has(.o_layout)), .oe_structure">
+                <we-button data-edit_category_brand_slider="" data-no-preview="true">Configure Slider</we-button>
+            </div>
+        </xpath>
+    </template>
+</odoo>

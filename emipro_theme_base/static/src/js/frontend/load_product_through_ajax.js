@@ -11,6 +11,8 @@ odoo.define('emipro_theme_base.load_product_through_ajax', function(require) {
     var product_detail = new sAnimations.registry.product_detail();
     var priceSlider = new publicWidget.registry.price_slider();
     var quickFilter = new sAnimations.registry.te_quick_filter_main_div();
+    var core = require('web.core');
+    var _t = core._t;
 
     sAnimations.registry.WebsiteSale.include({
         _onChangeAttribute: function(event) {
@@ -103,6 +105,21 @@ odoo.define('emipro_theme_base.load_product_through_ajax', function(require) {
             $parent.find("#add_to_cart,.quick-add-to-cart").toggleClass('disabled', !isCombinationPossible);
             $parent.find("#buy_now").toggleClass('disabled', !isCombinationPossible);
         },
+        /**
+         * Displays SKU and change based on select varient
+         * current combination.
+         *
+         * @override
+         */
+		_onChangeCombination:function (ev, $parent, combination) {
+		    this._super.apply(this, arguments);
+		    if( combination.sku_details ){
+		        $(".js_sku_div").html(combination.sku_details);
+		    }
+		    else{
+		        $(".js_sku_div").html('N/A');
+		    }
+		},
     });
 
     publicWidget.registry.load_ajax = publicWidget.Widget.extend({

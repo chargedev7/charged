@@ -9,6 +9,7 @@
 				08. Slider Style 5
 				09. Slider Style 6
 				10. Product name
+				11. Slider Style 7
 ***************************************************/
 
 /*================== 01. View all ======================*/
@@ -153,7 +154,7 @@ select#slider_category_option {
 .te_discount {
     color: #ff905a;
     display: inline-block;
-    margin: 0 0 0 0.5rem;
+    margin: 0 0 0 2px;
     font-weight: 500;
 	.te_prod_discount
 	{
@@ -170,30 +171,30 @@ select#slider_category_option {
 }
 .te_style_image_block{
     &.style-1 {
-        background-image: url(/theme_clarico_vega/static/src/img/snippets/slider_styles/slider_1.jpg);
+        background-image: url(/theme_clarico/static/src/img/snippets/slider_styles/slider_1.jpg);
         height: 250px;
         width: 80%;
         background-size: 100%;
         margin: 10px auto;
     }
     &.style-2 {
-        background-image: url(/theme_clarico_vega/static/src/img/snippets/slider_styles/slider_2.jpg);
+        background-image: url(/theme_clarico/static/src/img/snippets/slider_styles/slider_2.jpg);
         @extend .style-1;
     }
     &.style-3 {
-        background-image: url(/theme_clarico_vega/static/src/img/snippets/slider_styles/slider_3.jpg);
+        background-image: url(/theme_clarico/static/src/img/snippets/slider_styles/slider_3.jpg);
         @extend .style-1;
     }
     &.style-4 {
-        background-image: url(/theme_clarico_vega/static/src/img/snippets/slider_styles/slider_4.jpg);
+        background-image: url(/theme_clarico/static/src/img/snippets/slider_styles/slider_4.jpg);
         @extend .style-1;
     }
     &.style-5 {
-        background-image: url(/theme_clarico_vega/static/src/img/snippets/slider_styles/slider_5.jpg);
+        background-image: url(/theme_clarico/static/src/img/snippets/slider_styles/slider_5.jpg);
         @extend .style-1;
     }
     &.style-6 {
-        background-image: url(/theme_clarico_vega/static/src/img/snippets/slider_styles/slider_6.jpg);
+        background-image: url(/theme_clarico/static/src/img/snippets/slider_styles/slider_6.jpg);
         @extend .style-1;
     }
 }
@@ -217,6 +218,9 @@ select#slider_category_option {
 		@include border-radius(50px);
 	}
 }
+.te_style_3_border .te_slider_img{
+   padding-left: 0px;
+}
 /*==================== 04. Slider Style 1 ===================*/
 .te_product_slider_1
 {
@@ -225,20 +229,27 @@ select#slider_category_option {
 		@include transition(all,.3s,ease);
 		margin: 10px 7px;
 		border: 1px solid $border-color;
-		@include position(relative)
+		@include position(relative);
+		.ept-total-review {
+            margin-top: -8px;
+            margin-bottom: 4px;
+        }
 		.te_prod_info
 		{
-			margin-top: -55px;
+			margin-top: -70px;
 			overflow: hidden;
 			.te_prod_info_sub
 			{
 				background-color:nth($f_color,18);
 				text-align: center;
-				@include transform(translateY(55px))
+				@include transform(translateY(60px))
 				@include transition(all,.3s)
 				.product_name
 				{
-					max-width: 95%;
+					max-width: 100%;
+					margin: 0 0 6px 0;
+                    display: inline-block;
+                    width: 100%;
 				}
 			}
 		}
@@ -276,6 +287,9 @@ select#slider_category_option {
 				}
 			}
 		}
+		.btn {
+		    padding: 0.3rem 0.75rem;
+		}
 		.product_price {
 		    h6 {
 		        display: inline-block;
@@ -283,6 +297,10 @@ select#slider_category_option {
 		}
 		.btn {
 		    color: nth($f_color,05);
+		    font-size: 16px;
+		    @include media-breakpoint-down(sm){
+                font-size: 14px;
+            }
 		    &:hover {
 		        color: nth($f_color,05);
 		    }
@@ -292,24 +310,13 @@ select#slider_category_option {
 			img
 			{
 				@include object-fit(scale-down);
-				@media (min-width: 1599.98px){
-		            height: 20rem;
-		        }
-		        @media (min-width: 1199.98px) and (max-width: 1599.98px){
-		            height: 15rem;
-		        }
-		        @media (min-width: 1023.98px) and (max-width: 1199.98px){
-		            height: 17.2rem;
-		        }
-		        @media (min-width: 767.98px) and (max-width: 1023.98px){
-		            height: 19.3rem;
-		        }
-		        @media (min-width: 576.98px) and (max-width: 767.98px){
-		            height: 15.8rem;
-		        }
-		        @media (min-width: 319.98px) and (max-width: 576.98px){
-		            height: 31.8rem;
-		        }
+				height: 20rem;
+				@include media-breakpoint-down(lg){
+				    height: 15rem;
+				}
+		        @include media-breakpoint-down(xs){
+				    height: 15rem;
+				}
 			}
 		}
 	}
@@ -326,23 +333,12 @@ select#slider_category_option {
 	.te_slider_img img
 	{
 		@include object-fit(scale-down);
-		@media (min-width: 1599.98px){
-            height: 20rem;
-        }
-        @media (min-width: 1199.98px) and (max-width: 1599.98px){
+		height: 20rem;
+        @include media-breakpoint-down(lg){
             height: 15rem;
         }
-        @media (min-width: 1023.98px) and (max-width: 1199.98px){
-            height: 17.1rem;
-        }
-        @media (min-width: 767.98px) and (max-width: 1023.98px){
-            height: 19.5rem;
-        }
-        @media (min-width: 576.98px) and (max-width: 767.98px){
-            height: 15.9rem;
-        }
-        @media (min-width: 319.98px) and (max-width: 576.98px){
-
+        @include media-breakpoint-down(xs){
+            height: 15rem;
         }
 	}
 	@include media-breakpoint-down(xs)
@@ -357,8 +353,8 @@ select#slider_category_option {
 			.product_name
 			{
 				color: nth($f_color,3);
-				max-width: 95%;
-				margin-bottom: 0.9rem;
+				max-width: 100%;
+				margin-bottom: 4px;
 			}
 			.product_price
 			{
@@ -402,14 +398,21 @@ select#slider_category_option {
 					@include position(relative);
 					width: 45px;
 					height: 45px;
+					line-height: 45px;
 					color: nth($f_color,3);
 					@include border-radius(50%);
-					padding: 0;
-					line-height: 29px;
 					transform: translateY(50px);
 					overflow: hidden;
 					@include border(1px,11,solid)
 					margin-right: 3px;
+					font-size: 16px;
+                    padding: 0px;
+                    @include media-breakpoint-down(sm){
+					    font-size: 14px;
+					    width: 30px;
+                        height: 30px;
+                        line-height: 30px;
+					}
 					&:hover
 					{
 						color:nth($f_color,5);
@@ -466,23 +469,29 @@ select#slider_category_option {
 			@include transition(all,.3s)
 			.product_name
 			{
-				max-width: 95%;
-				margin-bottom: 0.7rem;
+				max-width: 100%;
+				margin-bottom: 0.25rem;
 			}
 			.te_prod_cart_wish_3
 			{
 				.btn
 				{
-					background: nth($f_color,19);
-					color: nth($f_color,5);
+					background: nth($f_color,5);
+					color: nth($f_color,19);
 					@include border(1px,19,solid)
 					@include transition(all,.4s,ease)
 					margin-right: 1px;
 					@include border-radius(50%);
-					width: 40px;
-					height: 40px;
-					line-height: 40px;
-					padding: 0 !important;
+					width: 30px;
+					height: 30px;
+					line-height: 30px;
+					padding: 0;
+					font-size: 14px;
+                    margin-top: 6px;
+					&:hover {
+					    color: nth($f_color,5);
+					    background: nth($f_color,19);
+					}
 				}
 				.o_add_wishlist.disabled
 				{
@@ -495,10 +504,23 @@ select#slider_category_option {
                 display: inline-block;
             }
         }
-        .te_discount {
-            font-size: 0.9rem;
-        }
 	}
+	.te_slider_img {
+        .o_carousel_product_card_img_top {
+            height: 120px;
+            @include object-fit(scale-down);
+        }
+    }
+	.te_product_slider_3_block_mobi{
+        @include media-breakpoint-down(xs){
+            margin-bottom: 1rem !important;
+        }
+        &:last-child{
+            @include media-breakpoint-down(xs){
+                 margin-bottom: 2.5rem !important;
+            }
+       }
+   }
 }
 .te_style_3_border
 {
@@ -511,6 +533,9 @@ select#slider_category_option {
 	{
 		@include box-shadow(0 3px 12px #ccc);
 	}
+	.te_prod_info_3 {
+        padding: 0px 0px 0px 8px;
+    }
 }
 /*================ 07. Slider Style 4 ===========================*/
 .te_slider_4_content
@@ -536,24 +561,13 @@ select#slider_category_option {
 		img
 		{
 			@include object-fit(scale-down);
-			@media (min-width: 1599.98px){
-	            height: 20.6rem;
-	        }
-	        @media (min-width: 1199.98px) and (max-width: 1599.98px){
-	            height: 15.7rem;
-	        }
-	        @media (min-width: 1023.98px) and (max-width: 1199.98px){
-	            height: 15.7rem;
-	        }
-	        @media (min-width: 767.98px) and (max-width: 1023.98px){
-	            height: 19.3rem;
-	        }
-	        @media (min-width: 576.98px) and (max-width: 767.98px){
-	            height: 14.5rem;
-	        }
-	        @media (min-width: 319.98px) and (max-width: 576.98px){
-	            height: 31.8rem;
-	        }
+			height: 20rem;
+            @include media-breakpoint-down(lg){
+                height: 15rem;
+            }
+            @include media-breakpoint-down(xs){
+                height: 15rem;
+            }
 		}
 	}
 	.te_prod_info_4
@@ -584,17 +598,15 @@ select#slider_category_option {
 			    display: inline-block;
 			}
 		}
-		.te_discount {
-		    font-size: 0.9rem;
-		}
 		.te_slider_4_desc
 		{
 			margin-bottom: 8px;
-			@include line-clamp(4,110px);
+			@include line-clamp(4);
+			max-height: 110px;
 			@include media-breakpoint-down(md)
 			{
 				-webkit-line-clamp: 3;
-				height: 70px;
+				max-height: 75px;
 			}
 			.te_slider_4_p
 			{
@@ -603,6 +615,11 @@ select#slider_category_option {
 		}
 		.btn {
             color:nth($f_color,5);
+            font-size: 16px;
+            padding: 0.5rem 1rem;
+            @include media-breakpoint-down(sm){
+                font-size: 14px;
+            }
 			&:hover {
 			    color:nth($f_color,5);
 				background:nth($f_color,19);
@@ -661,7 +678,14 @@ select#slider_category_option {
 				line-height: 44px;
 				padding: 0;
 				opacity: 0;
+				font-size: 16px;
 				@include transition(all,0.5s,ease)
+				@include media-breakpoint-down(sm){
+                    font-size: 14px;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                }
 				&:hover
 				{
 					color:nth($f_color,5);
@@ -685,15 +709,12 @@ select#slider_category_option {
             display: inline-block;
         }
     }
-    .te_discount {
-        font-size: 0.9rem;
-    }
-    /*.btn {
-        color:nth($f_color,05) !important;
-        &:hover {
-            color:nth($f_color,05) !important;
+    a.btn.btn-secondary {
+        font-size: 16px;
+        @include media-breakpoint-down(sm){
+            font-size: 14px;
         }
-    }*/
+    }
 	&:hover
 	{
 		.te_wishlist_quickview_icon .btn
@@ -701,6 +722,11 @@ select#slider_category_option {
 			opacity: 1;
 		}
 	}
+}
+.te_product_slider_5 {
+    .te_prod_info .product_name {
+        margin-top: 0px !important;
+    }
 }
 /*================= 09. Slider Style 6 ====================*/
 .te_slider_style_6 .te_product_ind
@@ -735,6 +761,10 @@ select#slider_category_option {
 			.o_add_wishlist
 			{
 				opacity: 1;
+				font-size: 16px;
+				@include media-breakpoint-down(sm){
+                    font-size: 14px;
+                }
 			}
 			.o_add_wishlist.disabled
 			{
@@ -755,13 +785,18 @@ select#slider_category_option {
 				}
 			}
 		}
-		[title="Shopping cart"]
+		#add_to_cart
 		{
 			@include position(absolute,unset,unset,-10%,0);
 			width: 100%;
 			@include transition(all,400ms);
 			@include style(6,5,inherit,unset);
 			opacity: 0;
+			font-size: 16px;
+			padding: 0.5rem 1rem;
+			@include media-breakpoint-down(sm){
+                font-size: 14px;
+            }
 			.fa
 			{
 				padding-right: 5px;
@@ -777,9 +812,6 @@ select#slider_category_option {
         h6 {
             display: inline-block;
         }
-    }
-    .te_discount {
-        font-size: 0.9rem;
     }
 	.te_prod_info_sub
 	{
@@ -800,7 +832,7 @@ select#slider_category_option {
 				}
 			}
 		}
-		[title="Shopping cart"]
+		#add_to_cart
 		{
 			opacity: 1;
 			bottom: 0%;
@@ -813,6 +845,7 @@ select#slider_category_option {
 	{
 	    @include line-clamp(1,23px);
 		margin-bottom: 3px;
+		line-height: 23px;
 	}
 	.te_2_line
 	{
@@ -824,4 +857,152 @@ select#slider_category_option {
 		-webkit-line-clamp: 3;
 		height: 65px;
 	}
+}
+.te_product_slider_1, .te_product_slider_2,
+.te_product_slider_3, .te_product_slider_4,
+.te_product_slider_5, .te_product_slider_6,
+.te_product_slider_7, .te_slider_style_8,
+.te_product_slider_banner {
+    .te_discount, .te_p_disc, .te_p_sm, .product_price > *, .product_price .text-danger.oe_default_price {
+        width: auto;
+        display: inline-block;
+        @include media-breakpoint-down(sm){
+            font-size: $font-size-base - 0.25rem; /* Reduced 4px */
+        }
+    }
+    .te_discount{
+        font-size: $font-size-base - 0.188rem !important; /* Reduced 3px */
+        @include media-breakpoint-down(sm){
+            font-size: $font-size-base - 0.25rem; /* Reduced 4px */
+        }
+    }
+    .te_categ_name {
+        text-decoration: none;
+        small {
+            color: #969696;
+            margin-bottom: 2px;
+        }
+    }
+    .ept-total-review {
+        .fa {
+            font-size: 14px;
+        }
+    }
+}
+
+.te_slider_style_7 {
+    .product-rows {
+        margin: 1rem 0.75rem;
+        @include media-breakpoint-up(lg){
+            display: grid;
+            grid-template-columns: 1.5fr 2fr 1.5fr;
+            grid-gap: 15px;
+        }
+        .te_product_ind {
+            @include media-breakpoint-up(lg){
+                width: 100%;
+                max-width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+            @include media-breakpoint-down(md){
+                margin: -1px 0 0 -1px;
+                border: 0px solid;
+                padding: 0;
+            }
+            &:first-child {
+                @include media-breakpoint-up(lg){
+                    grid-row-start: span 2;
+                }
+                .te_prod_info_2 {
+                    .te_prod_info_sub {
+                        .te_prod_cart_wish_2 {
+                            opacity: 1;
+                            .btn {
+                                @include transform(translateY(0px))
+                                width: 45px;
+                                height: 45px;
+                                line-height: 45px;
+                            }
+                        }
+                    }
+                }
+                .te_slider_img {
+                    img {
+                        height: 32rem;
+                        @include media-breakpoint-down(lg){
+                            height: 28rem;
+                        }
+                        @include media-breakpoint-down(md){
+                            height: 15rem;
+                        }
+                    }
+                }
+            }
+            &:nth-child(2) {
+                @include media-breakpoint-up(lg){
+                    order: -1;
+                }
+            }
+            form {
+                height: 100%;
+                @include media-breakpoint-down(md){
+                    border: 1px solid $border-color;
+                    padding: 10px;
+                }
+            }
+            .te_prod_info_2 {
+                .te_prod_info_sub {
+                    padding: 10px;
+                    .product_name {
+                        margin-bottom: 2px;
+                    }
+                    .te_prod_cart_wish_2 {
+                        padding-bottom: 0;
+                        .btn {
+                            width: 34px;
+                            height: 34px;
+                            line-height: 34px;
+                            padding: 0px;
+                            @include transition(all,0.3s,ease);
+                            font-size: 14px;
+                            @include media-breakpoint-down(xs){
+                                width: 30px;
+                                height: 30px;
+                                line-height: 30px;
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+            .te_slider_img {
+                img {
+                    @include object-fit(scale-down);
+                    height: 12rem;
+                    @include media-breakpoint-down(lg){
+                        height: 10rem;
+                    }
+                    @include media-breakpoint-down(md){
+                        height: 8rem;
+                    }
+                }
+            }
+        }
+        .product_price {
+            .oe_price_h4,
+            h6 {
+                display: inline-block;
+            }
+        }
+    }
+}
+.slider_body .product_price del
+{
+	 color:nth($f_color,9) !important;
+	 display: inline-block;
+	 span
+	 {
+	 	font-weight: normal !important;
+	 }
 }

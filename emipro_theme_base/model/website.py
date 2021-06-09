@@ -11,12 +11,14 @@ from werkzeug.exceptions import NotFound
 from odoo.tools.safe_eval import safe_eval
 
 import odoo
+import logging
+
 from odoo import fields, models, http
 from odoo.addons.auth_oauth.controllers.main import OAuthLogin
 from odoo.addons.website_sale_wishlist.controllers.main import WebsiteSale
 from odoo.addons.website_sale_wishlist.controllers.main import WebsiteSaleWishlist
 from odoo.addons.emipro_theme_base.controller.main import EmiproThemeBaseExtended
-
+_logger = logging.getLogger(__name__)
 
 class Website(models.Model):
     _inherit = "website"
@@ -811,11 +813,9 @@ class Website(models.Model):
         ('website_price', 'On Product Discount Price')
     ], string="Price Range Filter For Products",
          default='list_price', readonly=False)
-
-    # @api.depends('banner_video_url')
-    # def _compute_embed_code(self):
-    #     for image in self:
-    #         image.embed_code = get_video_embed_code(image.video_url)
+    is_advanced_search = fields.Boolean(string='Enable Advanced Search', help="Enable the advance search")
+    allowed_search_category = fields.Boolean(string='Allow Search In Category')
+    allowed_search_blog = fields.Boolean(string='Enable Advance Blog')
 
     def getDatabase(self):
         """
@@ -875,27 +875,29 @@ class Website(models.Model):
 
         return street +' '+ street2 +' '+ city + ' '+ zip + ' '+ state + ' '+ country
 
-    def get_brand(self, products=False):
-        """
-        This function is used to search the list of brand data
-        :return: List of brand
-        """
-
-        shop_brands = self.env['product.brand.ept'].sudo().search([('website_published','=', True),('website_id', 'in', (False,self.get_current_website().id))]).filtered(lambda r:r.products_count > 0)
-        return shop_brands
-
     def get_parent_category(self):
         """
         Collect all the parent category. and return with category name and category ID
         @Author : Angel Patel (24/09/2020)
         :return: cat_array
         """
-        category_obj = self.env['product.public.category'].sudo().search([('parent_id', '=', False),('website_id','in',[False,request.env['website'].sudo().get_current_website().id])])
-        cat_array = [{'name': "All",'id':""}]
-        if category_obj:
-            for cat in category_obj:
-                cat_array.append({'name': cat.name, 'id': cat.id})
+        cat_array = [{'name': "All", 'id': ""}]
+        try:
+            category_obj = self.env['product.public.category'].sudo().search([('parent_id', '=', False),('website_id','in',[False,request.env['website'].sudo().get_current_website().id])])
+            if category_obj:
+                for cat in category_obj:
+                    cat_array.append({'name': cat.name, 'id': cat.id})
+        except Exception:
+            return cat_array
         return cat_array
+
+    def get_carousel_category_list(self):
+        """
+        This method is used for return the list of category
+        which has selected the allow category in carousel option from admin
+        :return: list of category.
+        """
+        return []
 
     def get_product_categs_path(self, id):
         """
@@ -991,17 +993,6 @@ class Website(models.Model):
         """
         return image_process(img, size=(width, height))
 
-    def get_carousel_category_list(self):
-        """
-        This method is used for return the list of category
-        which has selected the allow category in carousel option from admin
-        :return: list of category.
-        """
-        domain = [('website_id', 'in', (False, self.get_current_website().id)),
-                  ('allow_in_category_carousel', '=', True)]
-        category = self.env['product.public.category'].sudo().search(domain)
-        return category
-
     def checkQuickFilter(self, currentWebsite, filterWebsiteArray):
         if currentWebsite in filterWebsiteArray or len(filterWebsiteArray) == 0:
             return True
@@ -1078,3 +1069,17 @@ class Website(models.Model):
             brand_dict[dict['product_brand_ept_id']]=dict['count']
         return brand_dict
 
+    def get_product_data(self, products, product_count=1):
+        product_items = []
+        product_data = []
+        count = 2
+        i = 1
+        for product in products:
+            product_data.append(product)
+            if(count / product_count > i):
+                product_items.append(product_data)
+                product_data = []
+                i += 1
+            count += 1
+        product_items.append(product_data)
+        return product_items

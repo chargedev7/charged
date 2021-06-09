@@ -33,6 +33,11 @@ $btn-gradient-2: theme-color("button_gradient_2") !default;
 /*$footer_text_color: palette-color('footer_text_color') !default;
 $header_text_hover_color: palette-color('header_text_hover_color') !default;*/
 
+$font-size-dynamic:          $font-size-base;
+@if o-website-value('header-font-size') {
+    $font-size-dynamic: o-website-value('header-font-size');
+}
+
 $footer_text_color: #333333;
 $header_text_hover_color: #333333;
 

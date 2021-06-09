@@ -51,6 +51,24 @@
                t-thumbnail="/theme_clarico/static/src/img/snippets/snippets_icon/snippet5.jpg"/>
         </xpath>
         <xpath expr="//div[@id='snippet_structure']/div[hasclass('o_panel_header')]" position="before">
+            <!--=== Dynamic Snippets ==== -->
+            <div class="o_panel_header">
+                Dynamic Snippets
+            </div>
+            <div class="o_panel_body">
+                <!-- Product Carousel -->
+                <t t-snippet="theme_clarico.p_slider"
+                   t-thumbnail="/theme_clarico/static/src/img/snippets/snippets_icon/product_carousel.jpg"/>
+                <!-- Category Carousel -->
+                <t t-snippet="theme_clarico.category_slider"
+                   t-thumbnail="/theme_clarico/static/src/img/snippets/snippets_icon/category_carousel.jpg"/>
+                <!-- Brand Slider -->
+                <t t-snippet="theme_clarico.brand_slider"
+                   t-thumbnail="/theme_clarico/static/src/img/snippets/snippets_icon/brand_carousel.jpg"/>
+                <!-- Generate Google Map -->
+                <t t-snippet="theme_clarico.google_map_generate"
+                   t-thumbnail="/theme_clarico/static/src/img/snippets/snippets_icon/google_map.jpeg"/>
+            </div>
             <!--==== 2 Columns ===-->
             <div class="o_panel_header">
                 2 Columns
@@ -230,24 +248,6 @@
                 <!-- Slider Style 11 -->
                 <t t-snippet="theme_clarico.slider_style_11"
                    t-thumbnail="/theme_clarico/static/src/img/snippets/snippets_icon/snippet29.jpg"/>
-            </div>
-            <!--=== Dynamic Snippets ==== -->
-            <div class="o_panel_header">
-                Dynamic Snippets
-            </div>
-            <div class="o_panel_body">
-                <!-- Brand Slider -->
-                <t t-snippet="theme_clarico.brand_slider"
-                   t-thumbnail="/theme_clarico/static/src/img/snippets/snippets_icon/brand-slider.jpg"/>
-                <!-- Product Carousel -->
-                <t t-snippet="theme_clarico.p_slider"
-                   t-thumbnail="/theme_clarico/static/src/img/snippets/snippets_icon/product_carousel.jpg"/>
-                <!-- Category Carousel -->
-                <t t-snippet="theme_clarico.category_slider"
-                   t-thumbnail="/theme_clarico/static/src/img/snippets/snippets_icon/category_carousel.jpg"/>
-                <!-- Generate Google Map -->
-                <t t-snippet="theme_clarico.google_map_generate"
-                   t-thumbnail="/theme_clarico/static/src/img/snippets/snippets_icon/google_map.jpeg"/>
             </div>
             <!--==== Inner Snippets =======-->
             <div class="o_panel_header">
@@ -481,7 +481,7 @@
     </template>
     <!--================= 4 Columns ==============================-->
     <template id="four_columns_pricing" name="Style 2">
-        <section class="pb32 pt32">
+        <section class="pb32 pt32 te_4_columns_style_2">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-6 s_col_no_bgcolor text-center" data-name="Box">
@@ -811,7 +811,7 @@
 
     <!--======================= Slider Style 1 ==================-->
     <template id="slider_style_1" name="Style 1">
-        <section class="s_carousel_wrapper" data-vxml="001">
+        <section class="s_carousel_wrapper te_slider_style_1" data-vxml="001">
             <div id="myCarousel" class="s_carousel s_carousel_default carousel slide"
                  data-interval="10000">
                 <!-- Indicators -->
@@ -864,7 +864,7 @@
     </template>
     <!--===================== Slider Style 2 ==========================-->
     <template id="slider_style_2" name="Style 2">
-        <section class="s_carousel_wrapper" data-vxml="001">
+        <section class="s_carousel_wrapper te_slider_style_2" data-vxml="001">
             <div id="myCarousel" class="s_carousel s_carousel_default carousel slide"
                  data-interval="10000">
                 <!-- Indicators -->
@@ -1011,7 +1011,7 @@
     </template>
     <!--===================== Slider Style 4 ==========================-->
     <template id="slider_style_4" name="Style 4">
-        <section class="s_carousel_wrapper" data-vxml="001">
+        <section class="s_carousel_wrapper te_slider_style_4" data-vxml="001">
             <div id="myCarousel" class="s_carousel s_carousel_default carousel slide"
                  data-interval="10000">
                 <ol class="carousel-indicators">
@@ -1097,7 +1097,7 @@
     </template>
     <!--=========================== Slider Style 5 ================================-->
     <template id="slider_style_5" name="Style 5">
-        <section class="s_carousel_wrapper" data-vxml="001">
+        <section class="s_carousel_wrapper te_slider_style_5" data-vxml="001">
             <div id="myCarousel" class="s_carousel s_carousel_default carousel slide"
                  data-interval="10000">
                 <!-- Indicators -->
@@ -1477,35 +1477,6 @@
             </div>
         </section>
     </template>
-    <!--================ Brand Slider =======================-->
-    <template id="brand_slider_content" inherit_id="emipro_theme_base.brand_slider_container"
-              name="Brand Slider Content">
-        <xpath expr="//section[hasclass('brand_slider_content')]" position="inside">
-            <t t-call="theme_clarico.brand_slider"/>
-        </xpath>
-    </template>
-    <template id="brand_slider" name="Brand Slider">
-        <div class="container pt32">
-            <h3 class="te_category_heading">Shop By Brands</h3>
-        </div>
-        <section class="te_brand_slider pb32" style="display:none">
-            <div class="container">
-                <t t-set="brands" t-value="request.env['website'].sudo().get_brand()"/>
-                <div class="owl-slider">
-                    <div class="owl-carousel brand_carousel">
-                        <t t-foreach="brands" t-as="brand">
-                            <div class="item te_brand_img">
-                                <a t-att-href="'/shop?attrib=0-%s'%brand.id" t-att-title="brand.name">
-                                    <img t-if="brand.logo"
-                                         t-att-src="'data:image/png;base64,%s' % to_text(request.env['website'].sudo().image_resize(brand.logo,120,120))"/>
-                                </a>
-                            </div>
-                        </t>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </template>
     <!--================ Generate Google Map =======================-->
     <template id="google_map_generate" name="Google Map">
         <section>
@@ -1528,38 +1499,7 @@
             </div>
         </xpath>
     </template>
-    <!--================ Category Slider =======================-->
-    <template id="category_slider_content" inherit_id="emipro_theme_base.category_slider_container"
-              name="Category Slider Content">
-        <xpath expr="//section[hasclass('category_slider_content')]" position="inside">
-            <t t-call="theme_clarico.category_slider"/>
-        </xpath>
-    </template>
-    <template id="category_slider" name="Category Carousel">
-        <div class="container pt32">
-            <h3 class="te_category_heading">Shop By Category</h3>
-        </div>
-        <section class="te_category_slider pb32" style="display:none">
-            <div class="container">
-                <t t-set="category_list" t-value="request.env['website'].sudo().get_carousel_category_list()"/>
-                <t t-if="category_list">
-                    <div class="owl-carousel category_carousel">
-                        <t t-foreach="category_list" t-as="category">
-                            <div class="te_category_item">
-                                <a t-att-href="'/shop/category/%s'%slug(category)">
-                                    <div class="te_category_img">
-                                        <img t-if="category.image_128"
-                                             t-att-src="'data:image/png;base64,%s' % to_text(category.image_128)"/>
-                                    </div>
-                                    <span class="te_category_name" t-esc="category.name"/>
-                                </a>
-                            </div>
-                        </t>
-                    </div>
-                </t>
-            </div>
-        </section>
-    </template>
+
     <!--================ Header Offer =======================-->
     <template id="header_offer_text" name="Header Offer">
         <div class="s_rating row te_s_header_offer_text">
@@ -4101,7 +4041,7 @@
     </template>
     <!--==================== 3 Columns Style 3 =====================-->
     <template id="three_columns_style_3" name="Style 3">
-        <section class="s_three_columns pb32 pt32">
+        <section class="s_three_columns pb32 pt32 te_3_columns_style_3">
             <div class="container">
                 <div class="row d-flex align-items-stretch">
                     <div class="col-lg-4 col-md-4 s_col_no_bgcolor">
@@ -4320,7 +4260,7 @@
                     <div class="col-lg-2 col-md-4 col-6 col-sm-6 s_col_no_bgcolor text-center te_ts_img_hvr"
                          data-name="Box">
                         <section>
-                            <div class="d-inline-block te_img_hover_overflow te_img_height_3col6">
+                                <div class="d-inline-block te_img_hover_overflow te_img_height_3col6">
                                 <img class="card-img-top img img-responsive te_feature_image"
                                      src="/theme_clarico/static/src/img/snippets/3_column/style_6/130_130.png"
                                      alt="Clarico-3 Columns Style 6"/>

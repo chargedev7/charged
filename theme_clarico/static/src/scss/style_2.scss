@@ -327,38 +327,39 @@
 .modal-content.quick_view_modal {
     @include border-radius(10px)
     @include box-shadow(0 1px 2px 0 rgba(0, 0, 0, 0.15));
+    overflow: hidden;
     .quick_close:not(:disabled):not(.disabled):focus,
     .quick_close {
-        @include position(absolute,-15px,-15px);
+        @include position(absolute,0px,0px);
+        @include transition(all,300ms,null);
+        background-color: transparent;
+        color: #000;
+        opacity: 1;
         width: 40px;
         height: 40px;
-        z-index: 1;
-        @include border(2px,08,solid);
-        @include border-radius(50%);
-        background: nth($f_color,5);
-        @include box-shadow(0px 4px 10px 0 rgba(0, 0, 0, 0.1));
-        opacity: 1;
-        text-align: center;
-        @include transition(all,.4s);
+        border: 0px;
         line-height: 40px;
+        z-index: 9;
         padding: 0;
-
+        box-shadow: 0 1px 10px #bbb;
+        background: nth($f_color,5);
         &:hover {
-            transform: rotateZ(180deg);
-            line-height: 36px;
-            opacity: 1;
-            border-color: nth($f_color,19);
+            box-shadow: 0 1px 10px #ddd;
         }
         @include media-breakpoint-down(sm) {
-            top: -6px;
-            right: -6px;
+            width: 26px;
+            height: 26px;
+            border: 0px;
+            line-height: 28px;
         }
         &:before{
             content: '\00d7';
-            font-size: 1.4rem;
-            font-family: fontAwesome;
-            font-weight: normal;
-            line-height: 0;
+            font-size: 26px;
+            font-family: inherit;
+            font-weight: 200;
+            @include media-breakpoint-down(sm) {
+                font-size: 24px;
+            }
         }
     }
     .oe_website_sale .row {
@@ -507,6 +508,19 @@
 }
 .te_quick_filter_ul ul.nav li.py-1.nav-item {
     padding: 0.4rem 0rem !important;
+    width: 92%;
+    display: inline-block;
+    &:hover{
+	    cursor: pointer;
+	    .te_s_attr_val{
+             color: lighten(theme-color('primary'), 15%);
+				    }
+		    .attr_counter{
+				background-color: theme-color('primary');
+				color: nth($f_color,5);
+				border-color: theme-color('primary');
+		        }
+			}
 }
 #quick_view_model .modal-dialog {
     @include media-breakpoint-down(lg) {
@@ -518,6 +532,20 @@
     @include media-breakpoint-down(xs) {
         margin: 20px 0;
     }
+}
+
+#quick_view_model_shop{
+   #product_details{
+        .oe_price_h4 b.oe_price{
+            font-size: $font-size-base;
+        }
+        span.text-danger.oe_default_price{
+            font-size: $font-size-base - 0.125rem; /* Reduced 2px */
+        }
+        .te_discount{
+            font-size: $font-size-base - 0.125rem; /* Reduced 2px */
+        }
+   }
 }
 
 /*=============== 03. Modal =====================*/
@@ -601,7 +629,7 @@
 }
 .te_quick_filter_dropdown_menu {
     width: 100%;
-    @include position(absolute,0);
+    @include position(absolute,-6px);
     background: nth($f_color,5);
     z-index: 99;
     max-height: 285px;
@@ -614,6 +642,11 @@
         @include transition(all,.4s);
         width: 0;
         right: 0;
+    }
+    .te_quick_filter_ul{
+        li.nav-item > ul.nav.nav-pills li.nav-item{
+            width: 95%;
+        }
     }
     &.te_open {
         @include media-breakpoint-down(md) {
@@ -653,27 +686,32 @@
                     color: nth($f_color,19);
                     cursor: pointer;
                     display: none;
+                    padding: 0rem 0.25rem;
                 }
             }
             .css_attribute_color {
-                margin: 4px 6px 6px 6px;
+                margin: 0px 6px 2px 0px;
                 border: 1px solid #ededed;
-                width: 12px;
-                height: 12px;
+                width: 22px;
+                height:22px;
+                border-radius: 20px;
                 position: relative;
                 display: inline-block;
                 vertical-align: middle;
+                @include position(relative)
                 &.active {
                     box-shadow: 0 0 0 1px #fff, 0 0 0 3px nth($f_color,19);
                 }
             }
             .te_color-name {
-                font-size:nth($f_sizes,3);
                 display:inline-block;
                 ~ span {
-                    font-size:nth($f_sizes,3);
                     padding-left: 0.5rem;
                 }
+            }
+            .te_color-name.text-truncate{
+                max-width: 100px;
+                vertical-align: middle;
             }
             .color-name {
                 line-height: inherit;
@@ -681,19 +719,21 @@
             ul {
                 display: inline-block;
                 overflow: auto;
-				max-height: 178px;
+				max-height: 180px;
                 width: 100%;
                 margin-left: 0;
                 > .nav-item {
                     @include display(flex);
                     padding: 0.3rem 0rem 0.3rem 0.2rem !important;
-
                     label.nav-link {
                         padding: 0 !important;
+                        width: 100%;
                         .te_qfilter_checkbox{
                             @include transition(all,.4s);
-                            padding-left: 1.2rem;
+                            padding-left: 1.6rem;
                             line-height: 1.5;
+                            vertical-align: middle;
+                            max-width: 129px;
                             &:before{
                                 left: 0;
                             }
@@ -717,6 +757,10 @@
                     }
                 }
             }
+        }
+        select.form-control{
+           margin-top: 0.3rem;
+           display: inherit;
         }
     }
 }
@@ -1234,7 +1278,14 @@
 	.te_wish_price
 	{
 		font-size:nth($f_sizes,3);
+		.row{
+            margin-left: 0px;
+        }
+        del{
+            margin-left: 5px;
+        }
 	}
+	
 	@include media-breakpoint-down(lg)
 	{
 		width: 47%;
@@ -1260,17 +1311,31 @@
 			border: 1px solid #ced4da;  /*This color is not used in variables*/
             background-color: nth($f_color,5);
             color:nth($f_color,13);
-            z-index: 0;
-			padding: 7px 12px;
+            z-index: 2;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            padding: 0;
+            font-size: 14px;
 		}
 	}
 }
 .mycart-popover .te_cart_popover_qty .input-group-prepend {
-    margin-right: 0px;
+    margin-right: 6px;
 }
 .oe_website_sale .oe_cart #cart_products .td-qty {
     .input-group-prepend, .input-group-append {
         border: 0px;
+    }
+}
+
+.css_quantity{
+    .input-group-prepend{
+        margin-right: 6px;
+    }
+    .input-group-append {
+        margin-left: 6px;
     }
 }
 .oe_optional_products_modal{
@@ -1474,6 +1539,7 @@
             line-height: 1.5;
             border-color: nth($f_color,27);
             padding: 0px;
+            white-space: pre;
             &:focus{
                 box-shadow: none;
                 outline: none;
@@ -1789,6 +1855,14 @@ button:focus {
         }
     }
 }
+ /* Iframe on boxed layout */
+ @if o-website-value('layout') == 'boxed' {
+    #mainSlider {
+        .owl-item iframe{
+            width: 100%;
+        }
+    }
+ }
 #thumbnailSlider {
     display: none;
     .owl-carousel {
@@ -2168,9 +2242,48 @@ button:focus {
 .fa {
     line-height: inherit;
 }
+
+.owl-dots {
+    display: block;
+    text-align: center;
+    .owl-dot {
+        span {
+            width: 10px;
+            height: 10px;
+            margin: 5px;
+            border: 2px solid #ccc;
+            display: block;
+            transition: opacity .2s ease;
+            border-radius: 30px;
+        }
+        &.active {
+            span {
+                background-color: #ccc;
+            }
+        }
+    }
+}
+
 /* Cookie notice */
 #website_cookies_bar {
     [data-aos].aos-animate {
         pointer-events: none;
     }
+}
+
+/** Drift zoom */
+.te-zoom-pane.drift-zoom-pane,
+.te-rtl-zoom-pane.drift-zoom-pane{
+    z-index: 1051; background-color: #FFFFFF;
+}
+.drift-zoom-pane.te-zoom-pane.te-inline {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+}
+.te-rtl-drift-zoom[data-enable-drift-zoom] .product_detail_img{
+    cursor: move;
+}
+.drift-zoom-pane.te-rtl-zoom-pane{
+    direction: rtl;
 }
